@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+   <style>
+        :root {
+            --primary-color: #2a7f8f;
+            --primary-light: #e0f7fa;
+            --secondary-color: #3aa5ba;
+            --success-color: #4caf50;
+            --success-light: #e8f5e9;
+            --danger-color: #f44336;
+            --danger-light: #ffebee;
+            --warning-color: #ff9800;
+            --warning-light: #fff8e1;
+            --info-color: #00bcd4;
+            --light-color: #f5f5f5;
+            --dark-color: #1e3a4a;
+            --dental-blue: #e0f7fa;
+            --dental-teal: #b2ebf2;
+        }
+        
+        body {
+            font-family: Vazir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+            padding: 20px;
+        }
+        
+        .main-content-expanded {
+            margin-right: 70px;
+        }
+        
+        /* Improved Stat Cards */
+        .stat-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            border-right: 4px solid;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.primary {
+            border-right-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .stat-card.success {
+            border-right-color: var(--success-color);
+            background-color: white;
+        }
+        
+        .stat-card.warning {
+            border-right-color: var(--warning-color);
+            background-color: white;
+        }
+        
+        .stat-card.danger {
+            border-right-color: var(--danger-color);
+            background-color: white;
+        }
+        
+        .stat-card .card-body {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-card h3 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card h6 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .icon-wrapper {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card.primary .icon-wrapper {
+            background-color: rgba(42, 127, 143, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .stat-card.success .icon-wrapper {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .stat-card.warning .icon-wrapper {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .stat-card.danger .icon-wrapper {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        .stat-card .trend.up {
+            color: var(--success-color);
+        }
+        
+        .stat-card .trend.down {
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend i {
+            margin-left: 5px;
+        }
+        
+        /* Responsive Improvements */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .main-content {
+                margin-right: 70px;
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-right: 0;
+                padding: 15px;
+            }
+            
+            .sidebar {
+                width: 280px;
+                right: -280px;
+            }
+            
+            .sidebar.show {
+                right: 0;
+            }
+            
+            .stat-card {
+                margin-bottom: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stat-card .card-body {
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .stat-card h6 {
+                font-size: 0.8rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+        }
+        
+        .main-content-expanded {
+            margin-right: 80px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            margin: 3px 0;
+            padding: 12px 15px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        
+        .nav-link i {
+            margin-left: 10px;
+            font-size: 1.1rem;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0;
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            background-color: var(--dental-teal);
+            border-top: none;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 12px 15px;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(58, 165, 186, 0.05);
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #236a77;
+            border-color: #236a77;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.15);
+            color: #e65100;
+        }
+        
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: #2e7d32;
+        }
+        
+        .status-canceled {
+            background-color: rgba(244, 67, 54, 0.15);
+            color: #c62828;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            color: var(--dental-teal);
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding-right: 40px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+           
+        .logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+        }
+        
+        .logo i {
+            margin-left: 10px;
+            color: var(--dental-teal);
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* Tab styles */
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--secondary-color);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 500;
+            background-color: transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            background-color: transparent;
+        }
+        
+        /* Modal styles */
+        .modal-content {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--dental-teal);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+        }
+        
+        .form-control, .form-select {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+        }
+        
+        /* Service categories */
+        .service-category {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-category h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        /* Invoice styles */
+        .invoice-header {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .invoice-table th {
+            background-color: #f8f9fa;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            
+            .main-content {
+                margin-right: 80px;
+            }
+             
+            .logo span {
+                display: none;
+            }
+            
+            .logo i {
+                margin-left: 0;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+            
+            .card-header .btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e6d7a;
+        }
+        
+        /* Dental theme elements */
+        .dental-bg {
+            background-color: var(--dental-blue);
+        }
+        
+        .tooth-icon {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+        
+        .dental-nav {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Modal full height on mobile */
+        @media (max-width: 768px) {
+            .modal-dialog {
+                margin: 0.5rem auto;
+                max-width: calc(100% - 1rem);
+            }
+            
+            .modal-content {
+                height: calc(100vh - 1rem);
+            }
+            
+            .modal-body {
+                overflow-y: auto;
+                max-height: calc(100vh - 150px);
+            }
+        }
+        
+        /* Better table actions */
+        .table-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Custom checkbox */
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 p-4" id="main-content">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="appointments">
+                    <div class="dental-nav d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">مدیریت نوبت‌ها <i class="bi bi-calendar-check tooth-icon"></i></h3>
+                        <div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
+                                <i class="bi bi-plus-lg me-2"></i>نوبت جدید
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="card-title mb-0">فیلتر نوبت‌ها</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">تاریخ:</label>
+                                        <input type="date" class="form-control persian-date">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">وضعیت:</label>
+                                        <select class="form-select">
+                                            <option selected>همه وضعیت‌ها</option>
+                                            <option>در انتظار</option>
+                                            <option>تکمیل شده</option>
+                                            <option>لغو شده</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">بیمار:</label>
+                                        <select class="form-select">
+                                            <option selected>همه بیماران</option>
+                                            <option>علی محمدی</option>
+                                            <option>فاطمه احمدی</option>
+                                            <option>رضا حسینی</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">خدمات:</label>
+                                        <select class="form-select">
+                                            <option selected>همه خدمات</option>
+                                            <option>عصب‌کشی</option>
+                                            <option>پر کردن دندان</option>
+                                            <option>جرمگیری</option>
+                                            <option>روکش دندان</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary w-100">اعمال فیلتر</button>
+                                    <button class="btn btn-outline-secondary w-100 mt-2">پاک کردن فیلترها</button>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-4">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="card-title mb-0">تقویم نوبت‌ها</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-right"></i></button>
+                                        <h5 class="mb-0 persian-date">خرداد 1402</h5>
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-left"></i></button>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ش</th>
+                                                <th>ی</th>
+                                                <th>د</th>
+                                                <th>س</th>
+                                                <th>چ</th>
+                                                <th>پ</th>
+                                                <th>ج</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-muted">29</td>
+                                                <td class="text-muted">30</td>
+                                                <td class="text-muted">31</td>
+                                                <td><div class="calendar-day">1</div></td>
+                                                <td><div class="calendar-day">2</div></td>
+                                                <td><div class="calendar-day">3</div></td>
+                                                <td><div class="calendar-day">4</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="calendar-day">5</div></td>
+                                                <td><div class="calendar-day">6</div></td>
+                                                <td><div class="calendar-day">7</div></td>
+                                                <td><div class="calendar-day">8</div></td>
+                                                <td><div class="calendar-day">9</div></td>
+                                                <td><div class="calendar-day">10</div></td>
+                                                <td><div class="calendar-day">11</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="calendar-day">12</div></td>
+                                                <td><div class="calendar-day">13</div></td>
+                                                <td><div class="calendar-day today">14</div></td>
+                                                <td><div class="calendar-day">15</div></td>
+                                                <td><div class="calendar-day">16</div></td>
+                                                <td><div class="calendar-day">17</div></td>
+                                                <td><div class="calendar-day">18</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="calendar-day has-appointment">19</div></td>
+                                                <td><div class="calendar-day">20</div></td>
+                                                <td><div class="calendar-day has-appointment">21</div></td>
+                                                <td><div class="calendar-day">22</div></td>
+                                                <td><div class="calendar-day">23</div></td>
+                                                <td><div class="calendar-day">24</div></td>
+                                                <td><div class="calendar-day">25</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="calendar-day">26</div></td>
+                                                <td><div class="calendar-day">27</div></td>
+                                                <td><div class="calendar-day">28</div></td>
+                                                <td><div class="calendar-day">29</div></td>
+                                                <td><div class="calendar-day">30</div></td>
+                                                <td class="text-muted">1</td>
+                                                <td class="text-muted">2</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">لیست نوبت‌ها</h5>
+                                    <div class="d-flex">
+                                        <div class="input-group ms-3" style="width: 250px;">
+                                            <input type="text" class="form-control" placeholder="جستجوی نوبت...">
+                                            <button class="btn btn-outline-secondary" type="button">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>تاریخ و زمان</th>
+                                                    <th>بیمار</th>
+                                                    <th>خدمت</th>
+                                                    <th>وضعیت</th>
+                                                    <th>عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="fade-in">
+                                                    <td>
+                                                        <div class="persian-date">۱۴ خرداد ۱۴۰۲</div>
+                                                        <small class="text-muted">10:00 - 10:30</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=32&background=2a7f8f&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>علی محمدی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>عصب‌کشی</td>
+                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="fade-in">
+                                                    <td>
+                                                        <div class="persian-date">۱۴ خرداد ۱۴۰۲</div>
+                                                        <small class="text-muted">11:00 - 11:45</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=32&background=3aa5ba&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>فاطمه احمدی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>روکش دندان</td>
+                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="fade-in">
+                                                    <td>
+                                                        <div class="persian-date">۱۳ خرداد ۱۴۰۲</div>
+                                                        <small class="text-muted">14:30 - 15:15</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=32&background=f44336&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>رضا حسینی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>جرمگیری</td>
+                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="fade-in">
+                                                    <td>
+                                                        <div class="persian-date">۱۲ خرداد ۱۴۰۲</div>
+                                                        <small class="text-muted">16:00 - 16:30</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=32&background=4caf50&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>زهرا کریمی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>پر کردن دندان</td>
+                                                    <td><span class="status-badge status-canceled">لغو شده</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="fade-in">
+                                                    <td>
+                                                        <div class="persian-date">۱۰ خرداد ۱۴۰۲</div>
+                                                        <small class="text-muted">09:00 - 09:45</small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=محسن+رضایی&size=32&background=ff9800&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>محسن رضایی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>معاینه عمومی</td>
+                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <nav aria-label="Page navigation" class="mt-4">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">قبلی</a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">بعدی</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Appointment Modal -->
+    <div class="modal fade" id="newAppointmentModal" tabindex="-1" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="newAppointmentModalLabel">ثبت نوبت جدید</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">بیمار <span class="text-danger">*</span></label>
+                                    <select class="form-select" required>
+                                        <option value="" selected disabled>انتخاب بیمار</option>
+                                        <option>علی محمدی</option>
+                                        <option>فاطمه احمدی</option>
+                                        <option>رضا حسینی</option>
+                                        <option>زهرا کریمی</option>
+                                        <option>محسن رضایی</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">تاریخ نوبت <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control persian-date" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">ساعت شروع <span class="text-danger">*</span></label>
+                                        <input type="time" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">مدت زمان (دقیقه) <span class="text-danger">*</span></label>
+                                        <select class="form-select" required>
+                                            <option value="30">30 دقیقه</option>
+                                            <option value="45">45 دقیقه</option>
+                                            <option value="60">60 دقیقه</option>
+                                            <option value="90">90 دقیقه</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">خدمات <span class="text-danger">*</span></label>
+                                    <select class="form-select" required>
+                                        <option value="" selected disabled>انتخاب خدمت</option>
+                                        <option>معاینه عمومی</option>
+                                        <option>عصب‌کشی</option>
+                                        <option>پر کردن دندان</option>
+                                        <option>جرمگیری</option>
+                                        <option>روکش دندان</option>
+                                        <option>لمینت</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">توضیحات</label>
+                                    <textarea class="form-control" rows="5" placeholder="توضیحات مربوط به نوبت..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <button type="button" class="btn btn-primary">ثبت نوبت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // تبدیل تاریخ میلادی به شمسی در فیلدهای تاریخ
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInputs = document.querySelectorAll('input[type="date"].persian-date');
+            
+            dateInputs.forEach(input => {
+                // تنظیم تاریخ پیش‌فرض به امروز
+                const today = new Date();
+                const formattedDate = today.toISOString().substr(0, 10);
+                input.value = formattedDate;
+                
+                // نمایش تاریخ به صورت شمسی (این بخش نیاز به کتابخانه تبدیل تاریخ دارد)
+                // در اینجا فقط نمایش نمونه قرار داده شده
+                input.addEventListener('change', function() {
+                    // کد تبدیل میلادی به شمسی باید اینجا قرار گیرد
+                });
+            });
+            
+            // نمایش tooltip برای دکمه‌های عملیات
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+</body>
+</html>
