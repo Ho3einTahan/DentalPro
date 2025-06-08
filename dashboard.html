@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دنتالینو - پنل مدیریت دندانپزشکی</title>
+    <!-- Bootstrap 5 RTL -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        
+            :root {
+            --primary-color: #2a7f8f;
+            --primary-light: #e0f7fa;
+            --secondary-color: #3aa5ba;
+            --success-color: #4caf50;
+            --success-light: #e8f5e9;
+            --danger-color: #f44336;
+            --danger-light: #ffebee;
+            --warning-color: #ff9800;
+            --warning-light: #fff8e1;
+            --info-color: #00bcd4;
+            --light-color: #f5f5f5;
+            --dark-color: #1e3a4a;
+            --dental-blue: #e0f7fa;
+            --dental-teal: #b2ebf2;
+        }
+        
+        body {
+            font-family: Vazir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .sidebar {
+            background-color: var(--dark-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-collapsed {
+            width: 70px;
+            overflow: hidden;
+        }
+        
+        .sidebar-expanded {
+            width: 280px;
+        }
+        
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+            padding: 20px;
+        }
+        
+        .main-content-expanded {
+            margin-right: 70px;
+        }
+        
+        /* Improved Stat Cards */
+        .stat-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            border-right: 4px solid;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.primary {
+            border-right-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .stat-card.success {
+            border-right-color: var(--success-color);
+            background-color: white;
+        }
+        
+        .stat-card.warning {
+            border-right-color: var(--warning-color);
+            background-color: white;
+        }
+        
+        .stat-card.danger {
+            border-right-color: var(--danger-color);
+            background-color: white;
+        }
+        
+        .stat-card .card-body {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-card h3 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card h6 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .icon-wrapper {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card.primary .icon-wrapper {
+            background-color: rgba(42, 127, 143, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .stat-card.success .icon-wrapper {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .stat-card.warning .icon-wrapper {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .stat-card.danger .icon-wrapper {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        .stat-card .trend.up {
+            color: var(--success-color);
+        }
+        
+        .stat-card .trend.down {
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend i {
+            margin-left: 5px;
+        }
+        
+        /* Responsive Improvements */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .main-content {
+                margin-right: 70px;
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-right: 0;
+                padding: 15px;
+            }
+            
+            .sidebar {
+                width: 280px;
+                right: -280px;
+            }
+            
+            .sidebar.show {
+                right: 0;
+            }
+            
+            .stat-card {
+                margin-bottom: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stat-card .card-body {
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .stat-card h6 {
+                font-size: 0.8rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
+    
+
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+        }
+        
+        .main-content-expanded {
+            margin-right: 80px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            margin: 3px 0;
+            padding: 12px 15px;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        
+        .nav-link i {
+            margin-left: 10px;
+            font-size: 1.1rem;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0;
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            background-color: var(--dental-teal);
+            border-top: none;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 12px 15px;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(58, 165, 186, 0.05);
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #236a77;
+            border-color: #236a77;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.15);
+            color: #e65100;
+        }
+        
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.15);
+            color: #2e7d32;
+        }
+        
+        .status-canceled {
+            background-color: rgba(244, 67, 54, 0.15);
+            color: #c62828;
+        }
+        
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s;
+        }
+        
+        .toggle-btn:hover {
+            color: var(--dental-teal);
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding-right: 40px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-left: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .user-profile div h6 {
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        
+        .user-profile div small {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+        }
+        
+        .logo i {
+            margin-left: 10px;
+            color: var(--dental-teal);
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* Tab styles */
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--secondary-color);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 500;
+            background-color: transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            background-color: transparent;
+        }
+        
+        /* Modal styles */
+        .modal-content {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--dental-teal);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+        }
+        
+        .form-control, .form-select {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+        }
+        
+        /* Service categories */
+        .service-category {
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .service-category h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        /* Invoice styles */
+        .invoice-header {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .invoice-table th {
+            background-color: #f8f9fa;
+        }
+        
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                overflow: hidden;
+            }
+            
+            .main-content {
+                margin-right: 80px;
+            }
+            
+            .sidebar .nav-link span {
+                display: none;
+            }
+            
+            .sidebar .nav-link {
+                text-align: center;
+                padding: 12px 5px;
+            }
+            
+            .sidebar .nav-link i {
+                margin-left: 0;
+                font-size: 1.2rem;
+            }
+            
+            .user-profile div {
+                display: none;
+            }
+            
+            .user-profile img {
+                margin-left: 0;
+            }
+            
+            .logo span {
+                display: none;
+            }
+            
+            .logo i {
+                margin-left: 0;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+            
+            .card-header .btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e6d7a;
+        }
+        
+        /* Dental theme elements */
+        .dental-bg {
+            background-color: var(--dental-blue);
+        }
+        
+        .tooth-icon {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+        
+        .dental-nav {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Modal full height on mobile */
+        @media (max-width: 768px) {
+            .modal-dialog {
+                margin: 0.5rem auto;
+                max-width: calc(100% - 1rem);
+            }
+            
+            .modal-content {
+                height: calc(100vh - 1rem);
+            }
+            
+            .modal-body {
+                overflow-y: auto;
+                max-height: calc(100vh - 150px);
+            }
+        }
+        
+        /* Better table actions */
+        .table-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Custom checkbox */
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar sidebar-expanded d-flex flex-column" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-tooth"></i>
+                <span>دنتالینو</span>
+            </div>
+            
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=دکتر+محمدی&background=2a7f8f&color=fff" alt="پروفایل">
+                <div>
+                    <h6>دکتر امیر محمدی</h6>
+                    <small>متخصص دندانپزشکی</small>
+                </div>
+            </div>
+            
+            <hr class="bg-secondary mx-3 my-1">
+            
+            <ul class="nav flex-column flex-grow-1 p-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#dashboard" data-bs-toggle="tab">
+                        <i class="fas fa-home"></i>
+                        <span>داشبورد</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#appointments" data-bs-toggle="tab">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>نوبت‌دهی</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#patients" data-bs-toggle="tab">
+                        <i class="fas fa-user-injured"></i>
+                        <span>بیماران</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#financial" data-bs-toggle="tab">
+                        <i class="fas fa-wallet"></i>
+                        <span>مالی و حسابداری</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services" data-bs-toggle="tab">
+                        <i class="fas fa-teeth"></i>
+                        <span>خدمات درمانی</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#reports" data-bs-toggle="tab">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>گزارشات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                        <i class="fas fa-cog"></i>
+                        <span>تنظیمات</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content flex-grow-1 p-4" id="main-content">
+            <div class="tab-content">
+                <!-- Dashboard Tab -->
+                <div class="tab-pane fade show active" id="dashboard">
+                    <div class="dental-nav d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">داشبورد مدیریتی <i class="fas fa-tooth tooth-icon"></i></h3>
+                        <div class="d-flex">
+                            <div class="search-box me-3">
+                                <input type="text" class="form-control" placeholder="جستجو...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
+                                <i class="fas fa-plus me-2"></i>نوبت جدید
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4 fade-in">
+                        <div class="col-md-3">
+                            <div class="card stat-card primary">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="text-muted">نوبت‌های امروز</h6>
+                                            <h3 class="mb-0">12</h3>
+                                            <div class="mt-2">
+                                                <span class="text-success"><i class="fas fa-arrow-up"></i> 5%</span>
+                                                <small class="text-muted">نسبت به دیروز</small>
+                                            </div>
+                                        </div>
+                                        <div class="icon-wrapper">
+                                            <i class="fas fa-calendar-day"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card success">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="text-muted">درآمد امروز</h6>
+                                            <h3 class="mb-0">3,450,000</h3>
+                                            <div class="mt-2">
+                                                <span class="text-success"><i class="fas fa-arrow-up"></i> 12%</span>
+                                                <small class="text-muted">نسبت به دیروز</small>
+                                            </div>
+                                        </div>
+                                        <div class="icon-wrapper">
+                                            <i class="fas fa-wallet"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card warning">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="text-muted">بیماران جدید</h6>
+                                            <h3 class="mb-0">4</h3>
+                                            <div class="mt-2">
+                                                <span class="text-success"><i class="fas fa-arrow-up"></i> 8%</span>
+                                                <small class="text-muted">نسبت به هفته گذشته</small>
+                                            </div>
+                                        </div>
+                                        <div class="icon-wrapper">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card danger">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="text-muted">بدهی‌های معوق</h6>
+                                            <h3 class="mb-0">2,100,000</h3>
+                                            <div class="mt-2">
+                                                <span class="text-danger"><i class="fas fa-arrow-down"></i> 3%</span>
+                                                <small class="text-muted">نسبت به ماه گذشته</small>
+                                            </div>
+                                        </div>
+                                        <div class="icon-wrapper">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row fade-in">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">نوبت‌های امروز</h5>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary">مشاهده همه</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>زمان</th>
+                                                    <th>بیمار</th>
+                                                    <th>خدمت</th>
+                                                    <th>وضعیت پرداخت</th>
+                                                    <th>وضعیت</th>
+                                                    <th>عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>10:00 - 10:30</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=32&background=2a7f8f&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>علی محمدی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>عصب‌کشی</td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        </div>
+                                                        <small class="text-muted">تکمیل شده</small>
+                                                    </td>
+                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>11:00 - 11:45</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=32&background=3aa5ba&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>فاطمه احمدی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>روکش دندان</td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                                        </div>
+                                                        <small class="text-muted">50% پرداخت شده</small>
+                                                    </td>
+                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>14:30 - 15:15</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=32&background=f44336&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>رضا حسینی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>جرمگیری</td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-danger" style="width: 0%"></div>
+                                                        </div>
+                                                        <small class="text-muted">پرداخت نشده</small>
+                                                    </td>
+                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>16:00 - 16:30</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=32&background=4caf50&color=fff" class="rounded-circle me-2" width="32" height="32">
+                                                            <span>زهرا کریمی</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>پر کردن دندان</td>
+                                                    <td>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                                                        </div>
+                                                        <small class="text-muted">تکمیل شده</small>
+                                                    </td>
+                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
+                                                    <td>
+                                                        <div class="table-actions">
+                                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                          <div class="card mt-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">آخرین بیماران</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=40&background=2a7f8f&color=fff" class="rounded-circle me-3" width="40" height="40">
+                                                <div>
+                                                    <h6 class="mb-1">علی محمدی</h6>
+                                                    <small class="text-muted">تلفن: 09123456789</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-primary">2 نوبت</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=40&background=3aa5ba&color=fff" class="rounded-circle me-3" width="40" height="40">
+                                                <div>
+                                                    <h6 class="mb-1">فاطمه احمدی</h6>
+                                                    <small class="text-muted">تلفن: 09129876543</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-primary">1 نوبت</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=40&background=f44336&color=fff" class="rounded-circle me-3" width="40" height="40">
+                                                <div>
+                                                    <h6 class="mb-1">رضا حسینی</h6>
+                                                    <small class="text-muted">تلفن: 09351234567</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-primary">3 نوبت</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=40&background=4caf50&color=fff" class="rounded-circle me-3" width="40" height="40">
+                                                <div>
+                                                    <h6 class="mb-1">زهرا کریمی</h6>
+                                                    <small class="text-muted">تلفن: 09107654321</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-primary">1 نوبت</span>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://ui-avatars.com/api/?name=محسن+رضایی&size=40&background=ff9800&color=fff" class="rounded-circle me-3" width="40" height="40">
+                                                <div>
+                                                    <h6 class="mb-1">محسن رضایی</h6>
+                                                    <small class="text-muted">تلفن: 09124567890</small>
+                                                </div>
+                                            </div>
+                                            <span class="badge bg-primary">0 نوبت</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                          <div class="card mt-4">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">خدمات پرکاربرد</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>عصب‌کشی</span>
+                                            <span>45%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-primary" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>پر کردن دندان</span>
+                                            <span>30%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>جرمگیری</span>
+                                            <span>15%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" style="width: 15%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span>روکش دندان</span>
+                                            <span>10%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" style="width: 10%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- Appointments Tab -->
+                <div class="tab-pane fade" id="appointments">
+                    <div class="dental-nav d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">مدیریت نوبت‌ها <i class="fas fa-calendar-check tooth-icon"></i></h3>
+                        <div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointment
