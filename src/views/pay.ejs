@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <style>
+        :root {
+            --primary-color: #2a7f8f;
+            --primary-light: #e0f7fa;
+            --secondary-color: #3aa5ba;
+            --success-color: #4caf50;
+            --success-light: #e8f5e9;
+            --danger-color: #f44336;
+            --danger-light: #ffebee;
+            --warning-color: #ff9800;
+            --warning-light: #fff8e1;
+            --info-color: #00bcd4;
+            --light-color: #f5f5f5;
+            --dark-color: #1e3a4a;
+            --dental-blue: #e0f7fa;
+            --dental-teal: #b2ebf2;
+        }
+        
+        body {
+            font-family: Vazir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+            padding: 20px;
+        }
+        
+        /* Improved Stat Cards */
+        .stat-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+            border-right: 4px solid;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card.primary {
+            border-right-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .stat-card.success {
+            border-right-color: var(--success-color);
+            background-color: white;
+        }
+        
+        .stat-card.warning {
+            border-right-color: var(--warning-color);
+            background-color: white;
+        }
+        
+        .stat-card.danger {
+            border-right-color: var(--danger-color);
+            background-color: white;
+        }
+        
+        .stat-card .card-body {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-card h3 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card h6 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .icon-wrapper {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card.primary .icon-wrapper {
+            background-color: rgba(42, 127, 143, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .stat-card.success .icon-wrapper {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+        
+        .stat-card.warning .icon-wrapper {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .stat-card.danger .icon-wrapper {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        
+        .stat-card .trend.up {
+            color: var(--success-color);
+        }
+        
+        .stat-card .trend.down {
+            color: var(--danger-color);
+        }
+        
+        .stat-card .trend i {
+            margin-left: 5px;
+        }
+        
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0 !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0;
+        }
+        
+        /* Table Styles */
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+            width: 100%;
+        }
+        
+        .table th {
+            background-color: var(--dental-teal);
+            border-top: none;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 12px 15px;
+            text-align: right;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            text-align: right;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(58, 165, 186, 0.05);
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #236a77;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            background-color: transparent;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-outline-secondary {
+            color: #6c757d;
+            border: 1px solid #6c757d;
+            background-color: transparent;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        /* Badge Styles */
+        .badge {
+            padding: 5px 10px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+            color: white;
+        }
+        
+        .bg-success {
+            background-color: var(--success-color) !important;
+            color: white;
+        }
+        
+        .bg-danger {
+            background-color: var(--danger-color) !important;
+            color: white;
+        }
+        
+        .bg-warning {
+            background-color: var(--warning-color) !important;
+            color: white;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e9ecef;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .bg-success {
+            background-color: var(--success-color) !important;
+        }
+        
+        .bg-warning {
+            background-color: var(--warning-color) !important;
+        }
+        
+        .bg-danger {
+            background-color: var(--danger-color) !important;
+        }
+        
+        /* Form Styles */
+        .form-control, .form-select {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            width: 100%;
+            font-family: inherit;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            display: block;
+        }
+        
+        /* Dental Nav */
+        .dental-nav {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tooth-icon {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+        
+        /* Table Actions */
+        .table-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            padding-right: 0;
+            list-style: none;
+        }
+        
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+            width: 90%;
+            max-width: 800px;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: var(--dental-teal);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-right: 0;
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .card-header .btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+            
+            .table-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .dental-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .dental-nav .btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stat-card .card-body {
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .stat-card h6 {
+                font-size: 0.8rem;
+            }
+            
+            .stat-card .icon-wrapper {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="d-flex">
+    <!-- Main Content -->
+    <div class="main-content flex-grow-1 p-4" id="main-content">
+        <div class="dental-nav">
+            <h3 class="mb-0">مدیریت مالی و حسابداری <i class="fas fa-calculator tooth-icon"></i></h3>
+            <div class="d-flex">
+                <button class="btn btn-primary me-2" id="addTransactionBtn">
+                    <i class="fas fa-plus me-2"></i> تراکنش جدید
+                </button>
+                <button class="btn btn-success">
+                    <i class="fas fa-file-excel me-2"></i> خروجی Excel
+                </button>
+            </div>
+        </div>
+        
+        <!-- Financial Summary Cards -->
+        <div class="row mb-4 fade-in">
+            <div class="col-md-3">
+                <div class="card stat-card primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">درآمد امروز</h6>
+                                <h3 class="mb-0">12,450,000</h3>
+                                <div class="mt-2">
+                                    <span class="text-success"><i class="fas fa-arrow-up"></i> 8%</span>
+                                    <small class="text-muted">نسبت به دیروز</small>
+                                </div>
+                            </div>
+                            <div class="icon-wrapper">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">درآمد ماه جاری</h6>
+                                <h3 class="mb-0">89,750,000</h3>
+                                <div class="mt-2">
+                                    <span class="text-success"><i class="fas fa-arrow-up"></i> 15%</span>
+                                    <small class="text-muted">نسبت به ماه گذشته</small>
+                                </div>
+                            </div>
+                            <div class="icon-wrapper">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">هزینه‌های ماه</h6>
+                                <h3 class="mb-0">23,900,000</h3>
+                                <div class="mt-2">
+                                    <span class="text-danger"><i class="fas fa-arrow-down"></i> 5%</span>
+                                    <small class="text-muted">نسبت به ماه گذشته</small>
+                                </div>
+                            </div>
+                            <div class="icon-wrapper">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card danger">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="text-muted">بدهی‌های معوق</h6>
+                                <h3 class="mb-0">5,200,000</h3>
+                                <div class="mt-2">
+                                    <span class="text-danger"><i class="fas fa-arrow-up"></i> 10%</span>
+                                    <small class="text-muted">نسبت به ماه گذشته</small>
+                                </div>
+                            </div>
+                            <div class="icon-wrapper">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">از تاریخ</label>
+                    <input type="text" class="form-control" id="fromDate" placeholder="1402/05/01">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">تا تاریخ</label>
+                    <input type="text" class="form-control" id="toDate" placeholder="1402/05/15">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">نوع تراکنش</label>
+                    <select class="form-select" id="transactionTypeFilter">
+                        <option value="" selected>همه انواع</option>
+                        <option value="income">دریافتی</option>
+                        <option value="expense">هزینه</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">وضعیت پرداخت</label>
+                    <select class="form-select" id="paymentStatusFilter">
+                        <option value="" selected>همه وضعیت‌ها</option>
+                        <option value="paid">پرداخت شده</option>
+                        <option value="unpaid">پرداخت نشده</option>
+                        <option value="partial">پرداخت جزئی</option>
+                    </select>
+                </div>
+            </div>
+        </div>        
+        <!-- Financial Transactions -->
+        <div class="card fade-in">
+            <div class="card-header">
+                <h5 class="card-title mb-0">تراکنش‌های مالی</h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary me-2">فیلتر</button>
+                    <button class="btn btn-sm btn-outline-secondary">بازنشانی</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>تاریخ</th>
+                                <th>شماره فاکتور</th>
+                                <th>بیمار</th>
+                                <th>نوع</th>
+                                <th>مبلغ (تومان)</th>
+                                <th>وضعیت پرداخت</th>
+                                <th>توضیحات</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1402/05/12</td>
+                                <td>INV-2023-001</td>
+                                <td>علی محمدی</td>
+                                <td><span class="badge bg-success">دریافتی</span></td>
+                                <td>2,500,000</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                    <small>تکمیل شده</small>
+                                </td>
+                                <td>عصب‌کشی دندان آسیاب</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>1402/05/11</td>
+                                <td>INV-2023-002</td>
+                                <td>فاطمه احمدی</td>
+                                <td><span class="badge bg-success">دریافتی</span></td>
+                                <td>1,800,000</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                    <small>تکمیل شده</small>
+                                </td>
+                                <td>پر کردن دندان</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>1402/05/10</td>
+                                <td>EXP-2023-001</td>
+                                <td>-</td>
+                                <td><span class="badge bg-danger">هزینه</span></td>
+                                <td>3,200,000</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                    <small>تکمیل شده</small>
+                                </td>
+                                <td>خرید مواد مصرفی</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>1402/05/09</td>
+                                <td>INV-2023-003</td>
+                                <td>رضا حسینی</td>
+                                <td><span class="badge bg-success">دریافتی</span></td>
+                                <td>4,000,000</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                    <small>50% پرداخت شده</small>
+                                </td>
+                                <td>روکش دندان</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>1402/05/08</td>
+                                <td>INV-2023-004</td>
+                                <td>زهرا کریمی</td>
+                                <td><span class="badge bg-success">دریافتی</span></td>
+                                <td>1,200,000</td>
+                                <td>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-danger" style="width: 0%"></div>
+                                    </div>
+                                    <small>پرداخت نشده</small>
+                                </td>
+                                <td>جرمگیری</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Income vs Expense Chart -->
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">نمودار درآمد و هزینه‌ها (ماه جاری)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div style="height: 300px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            <p class="text-muted">نمودار مقایسه درآمد و هزینه‌ها در اینجا نمایش داده می‌شود</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">توزیع درآمد بر اساس خدمات</h5>
+                    </div>
+                    <div class="card-body">
+                        <div style="height: 300px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                            <p class="text-muted">نمودار دایره‌ای توزیع درآمد در اینجا نمایش داده می‌شود</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Transaction Modal -->
+<div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTransactionModalLabel">ثبت تراکنش جدید</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="transactionType" class="form-label">نوع تراکنش</label>
+                                <select class="form-select" id="transactionType">
+                                    <option value="" selected disabled>انتخاب کنید</option>
+                                    <option value="income">دریافتی</option>
+                                    <option value="expense">هزینه</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="transactionDate" class="form-label">تاریخ تراکنش</label>
+                                <input type="text" class="form-control" id="transactionDate" placeholder="1402/05/15">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="patientSelect" class="form-label">بیمار (برای دریافتی)</label>
+                                <select class="form-select" id="patientSelect">
+                                    <option value="" selected disabled>انتخاب بیمار</option>
+                                    <option value="1">علی محمدی (PT-001)</option>
+                                    <option value="2">فاطمه احمدی (PT-002)</option>
+                                    <option value="3">رضا حسینی (PT-003)</option>
+                                    <option value="4">زهرا کریمی (PT-004)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="serviceSelect" class="form-label">خدمت (برای دریافتی)</label>
+                                <select class="form-select" id="serviceSelect">
+                                    <option value="" selected disabled>انتخاب خدمت</option>
+                                    <option value="1">عصب‌کشی</option>
+                                    <option value="2">پر کردن دندان</option>
+                                    <option value="3">جرمگیری</option>
+                                    <option value="4">روکش دندان</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">مبلغ (تومان)</label>
+                                <input type="text" class="form-control" id="amount" placeholder="1,000,000">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="paymentStatus" class="form-label">وضعیت پرداخت</label>
+                                <select class="form-select" id="paymentStatus">
+                                    <option value="paid" selected>پرداخت شده</option>
+                                    <option value="unpaid">پرداخت نشده</option>
+                                    <option value="partial">پرداخت جزئی</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" id="partialPaymentSection" style="display: none;">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="paidAmount" class="form-label">مبلغ پرداخت شده (تومان)</label>
+                                <input type="text" class="form-control" id="paidAmount" placeholder="500,000">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="paymentMethod" class="form-label">روش پرداخت</label>
+                                <select class="form-select" id="paymentMethod">
+                                    <option value="cash" selected>نقدی</option>
+                                    <option value="card">کارتخوان</option>
+                                    <option value="transfer">حواله بانکی</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">توضیحات</label>
+                        <textarea class="form-control" id="description" rows="3" placeholder="توضیحات مربوط به تراکنش"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="attachment" class="form-label">ضمیمه (اختیاری)</label>
+                        <input type="file" class="form-control" id="attachment">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                <button type="button" class="btn btn-primary">ثبت تراکنش</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Show/hide partial payment section based on payment status
+    document.getElementById('paymentStatus').addEventListener('change', function() {
+        const partialPaymentSection = document.getElementById('partialPaymentSection');
+        if (this.value === 'partial') {
+            partialPaymentSection.style.display = 'flex';
+        } else {
+            partialPaymentSection.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
