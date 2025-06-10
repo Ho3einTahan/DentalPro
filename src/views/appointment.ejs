@@ -148,10 +148,7 @@
         
         /* Responsive Improvements */
         @media (max-width: 992px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
+     
             
             .main-content {
                 margin-right: 70px;
@@ -175,14 +172,6 @@
                 padding: 15px;
             }
             
-            .sidebar {
-                width: 280px;
-                right: -280px;
-            }
-            
-            .sidebar.show {
-                right: 0;
-            }
             
             .stat-card {
                 margin-bottom: 15px;
@@ -218,31 +207,6 @@
         .main-content {
             margin-right: 280px;
             transition: all 0.3s;
-        }
-        
-        .main-content-expanded {
-            margin-right: 80px;
-        }
-        
-        .nav-link {
-            color: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-            margin: 3px 0;
-            padding: 12px 15px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
-        
-        .nav-link i {
-            margin-left: 10px;
-            font-size: 1.1rem;
-            min-width: 20px;
-            text-align: center;
         }
         
         .progress {
@@ -404,19 +368,6 @@
             border: 1px solid #ddd;
         }
            
-        .logo {
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-        }
-        
-        .logo i {
-            margin-left: 10px;
-            color: var(--dental-teal);
-        }
         
         /* Animation */
         @keyframes fadeIn {
@@ -427,26 +378,7 @@
         .fade-in {
             animation: fadeIn 0.4s ease-out forwards;
         }
-        
-        /* Tab styles */
-        .nav-tabs {
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .nav-tabs .nav-link {
-            color: var(--secondary-color);
-            border: none;
-            padding: 10px 20px;
-            font-weight: 500;
-            background-color: transparent;
-        }
-        
-        .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-            background-color: transparent;
-        }
-        
+
         /* Modal styles */
         .modal-content {
             border: none;
@@ -515,21 +447,61 @@
             background-color: #f8f9fa;
         }
         
+
+        /* اضافه کردن این استایل‌ها به بخش استایل‌های موجود */
+
+/* بهبود فیلترها */
+.filter-box .form-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.filter-box .form-control,
+.filter-box .form-select {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.75rem;
+    height: calc(1.5em + 0.5rem + 2px);
+}
+
+.filter-box .input-group {
+    height: calc(1.5em + 0.5rem + 2px);
+}
+
+.filter-box .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* بهبود کارت فیلتر */
+.filter-box .card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+}
+
+.filter-box .card-body {
+    padding: 1.25rem;
+}
+
+/* واکنش‌گرایی بهتر */
+@media (max-width: 768px) {
+    .filter-box .col-md-6 {
+        margin-bottom: 0.75rem;
+    }
+    
+    .filter-box .d-flex.gap-2 {
+        justify-content: flex-end;
+    }
+}
+
         /* Responsive adjustments */
         @media (max-width: 992px) {
             
             .main-content {
                 margin-right: 80px;
             }
-             
-            .logo span {
-                display: none;
-            }
-            
-            .logo i {
-                margin-left: 0;
-                font-size: 1.8rem;
-            }
+        
         }
         
         @media (max-width: 768px) {
@@ -574,12 +546,16 @@
             margin-left: 5px;
         }
         
+       /* Dental Nav */
         .dental-nav {
             background-color: white;
             padding: 15px 20px;
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         /* Modal full height on mobile */
@@ -611,293 +587,290 @@
             border-color: var(--primary-color);
         }
     </style>
+
 </head>
 <body>
-    <div class="d-flex">
+
+     <div class="d-flex">
         <!-- Main Content -->
         <div class="main-content flex-grow-1 p-4" id="main-content">
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="appointments">
-                    <div class="dental-nav d-flex justify-content-between align-items-center">
-                        <h3 class="mb-0">مدیریت نوبت‌ها <i class="bi bi-calendar-check tooth-icon"></i></h3>
-                        <div>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
-                                <i class="bi bi-plus-lg me-2"></i>نوبت جدید
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header bg-primary text-white">
-                                    <h5 class="card-title mb-0">فیلتر نوبت‌ها</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label class="form-label">تاریخ:</label>
-                                        <input type="date" class="form-control persian-date">
+        <div class="dental-nav d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">مدیریت نوبت‌ها <i class="bi bi-calendar-check tooth-icon"></i></h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
+                <i class="bi bi-plus-lg me-2"></i>نوبت جدید
+            </button>
+        </div>
+        
+      <!-- Filter Box - تمام عرض بالای جدول -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title mb-4">فیلتر نوبت‌ها</h5>
+        <div class="row g-3">
+            <!-- وضعیت نوبت -->
+            <div class="col-md-6 col-lg-2">
+                <label for="statusFilter" class="form-label small fw-bold text-muted">وضعیت</label>
+                <select class="form-select form-select-sm" id="statusFilter">
+                    <option value="all" selected>همه وضعیت‌ها</option>
+                    <option value="pending">در انتظار</option>
+                    <option value="completed">تکمیل شده</option>
+                    <option value="canceled">لغو شده</option>
+                </select>
+            </div>
+            
+            <!-- خدمت -->
+            <div class="col-md-6 col-lg-2">
+                <label for="serviceFilter" class="form-label small fw-bold text-muted">خدمت</label>
+                <select class="form-select form-select-sm" id="serviceFilter">
+                    <option value="all" selected>همه خدمات</option>
+                    <option value="1">معاینه عمومی</option>
+                    <option value="2">عصب‌کشی</option>
+                    <option value="3">پر کردن دندان</option>
+                    <option value="4">جرمگیری</option>
+                    <option value="5">روکش دندان</option>
+                </select>
+            </div>
+            
+            <!-- تاریخ شروع -->
+            <div class="col-md-6 col-lg-2">
+                <label for="startDateFilter" class="form-label small fw-bold text-muted">از تاریخ</label>
+                <input type="date" class="form-control form-control-sm" id="startDateFilter">
+            </div>
+            
+            <!-- تاریخ پایان -->
+            <div class="col-md-6 col-lg-2">
+                <label for="endDateFilter" class="form-label small fw-bold text-muted">تا تاریخ</label>
+                <input type="date" class="form-control form-control-sm" id="endDateFilter">
+            </div>
+            
+            <!-- جستجو -->
+            <div class="col-md-12 col-lg-3">
+                <label for="searchInput" class="form-label small fw-bold text-muted">جستجو</label>
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" id="searchInput" placeholder="نام بیمار یا تلفن...">
+                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- دکمه‌های اقدام -->
+            <div class="col-md-12 col-lg-1 d-flex align-items-end">
+                <div class="d-flex gap-2 w-100">
+                    <button class="btn btn-sm btn-primary flex-grow-1" id="applyFilters">
+                        <i class="bi bi-funnel"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" id="resetFilters">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+        <!-- Appointments Table -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">لیست نوبت‌ها</h5>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-primary">
+                        <i class="bi bi-download me-2"></i>خروجی Excel
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>تاریخ و زمان</th>
+                                <th>بیمار</th>
+                                <th>خدمت</th>
+                                <th>وضعیت</th>
+                                <th>توضیحات</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fade-in">
+                                <td data-label="تاریخ و زمان">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">۱۴ خرداد ۱۴۰۲</span>
+                                        <small class="text-muted">10:00 - 10:30</small>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">وضعیت:</label>
-                                        <select class="form-select">
-                                            <option selected>همه وضعیت‌ها</option>
-                                            <option>در انتظار</option>
-                                            <option>تکمیل شده</option>
-                                            <option>لغو شده</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">بیمار:</label>
-                                        <select class="form-select">
-                                            <option selected>همه بیماران</option>
-                                            <option>علی محمدی</option>
-                                            <option>فاطمه احمدی</option>
-                                            <option>رضا حسینی</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">خدمات:</label>
-                                        <select class="form-select">
-                                            <option selected>همه خدمات</option>
-                                            <option>عصب‌کشی</option>
-                                            <option>پر کردن دندان</option>
-                                            <option>جرمگیری</option>
-                                            <option>روکش دندان</option>
-                                        </select>
-                                    </div>
-                                    <button class="btn btn-primary w-100">اعمال فیلتر</button>
-                                    <button class="btn btn-outline-secondary w-100 mt-2">پاک کردن فیلترها</button>
-                                </div>
-                            </div>
-                            
-                            <div class="card mt-4">
-                                <div class="card-header bg-info text-white">
-                                    <h5 class="card-title mb-0">تقویم نوبت‌ها</h5>
-                                </div>
-                                <div class="card-body text-center">
-                                    <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
-                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-right"></i></button>
-                                        <h5 class="mb-0 persian-date">خرداد 1402</h5>
-                                        <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chevron-left"></i></button>
-                                    </div>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>ش</th>
-                                                <th>ی</th>
-                                                <th>د</th>
-                                                <th>س</th>
-                                                <th>چ</th>
-                                                <th>پ</th>
-                                                <th>ج</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-muted">29</td>
-                                                <td class="text-muted">30</td>
-                                                <td class="text-muted">31</td>
-                                                <td><div class="calendar-day">1</div></td>
-                                                <td><div class="calendar-day">2</div></td>
-                                                <td><div class="calendar-day">3</div></td>
-                                                <td><div class="calendar-day">4</div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="calendar-day">5</div></td>
-                                                <td><div class="calendar-day">6</div></td>
-                                                <td><div class="calendar-day">7</div></td>
-                                                <td><div class="calendar-day">8</div></td>
-                                                <td><div class="calendar-day">9</div></td>
-                                                <td><div class="calendar-day">10</div></td>
-                                                <td><div class="calendar-day">11</div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="calendar-day">12</div></td>
-                                                <td><div class="calendar-day">13</div></td>
-                                                <td><div class="calendar-day today">14</div></td>
-                                                <td><div class="calendar-day">15</div></td>
-                                                <td><div class="calendar-day">16</div></td>
-                                                <td><div class="calendar-day">17</div></td>
-                                                <td><div class="calendar-day">18</div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="calendar-day has-appointment">19</div></td>
-                                                <td><div class="calendar-day">20</div></td>
-                                                <td><div class="calendar-day has-appointment">21</div></td>
-                                                <td><div class="calendar-day">22</div></td>
-                                                <td><div class="calendar-day">23</div></td>
-                                                <td><div class="calendar-day">24</div></td>
-                                                <td><div class="calendar-day">25</div></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="calendar-day">26</div></td>
-                                                <td><div class="calendar-day">27</div></td>
-                                                <td><div class="calendar-day">28</div></td>
-                                                <td><div class="calendar-day">29</div></td>
-                                                <td><div class="calendar-day">30</div></td>
-                                                <td class="text-muted">1</td>
-                                                <td class="text-muted">2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title mb-0">لیست نوبت‌ها</h5>
-                                    <div class="d-flex">
-                                        <div class="input-group ms-3" style="width: 250px;">
-                                            <input type="text" class="form-control" placeholder="جستجوی نوبت...">
-                                            <button class="btn btn-outline-secondary" type="button">
-                                                <i class="bi bi-search"></i>
-                                            </button>
+                                </td>
+                                <td data-label="بیمار">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=36&background=2a7f8f&color=fff" class="patient-avatar">
+                                        <div class="d-flex flex-column">
+                                            <span>علی محمدی</span>
+                                            <small class="text-muted">09351234567</small>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>تاریخ و زمان</th>
-                                                    <th>بیمار</th>
-                                                    <th>خدمت</th>
-                                                    <th>وضعیت</th>
-                                                    <th>عملیات</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="fade-in">
-                                                    <td>
-                                                        <div class="persian-date">۱۴ خرداد ۱۴۰۲</div>
-                                                        <small class="text-muted">10:00 - 10:30</small>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=32&background=2a7f8f&color=fff" class="rounded-circle me-2" width="32" height="32">
-                                                            <span>علی محمدی</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>عصب‌کشی</td>
-                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
-                                                    <td>
-                                                        <div class="table-actions">
-                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
-                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
-                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="fade-in">
-                                                    <td>
-                                                        <div class="persian-date">۱۴ خرداد ۱۴۰۲</div>
-                                                        <small class="text-muted">11:00 - 11:45</small>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=32&background=3aa5ba&color=fff" class="rounded-circle me-2" width="32" height="32">
-                                                            <span>فاطمه احمدی</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>روکش دندان</td>
-                                                    <td><span class="status-badge status-pending">در انتظار</span></td>
-                                                    <td>
-                                                        <div class="table-actions">
-                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
-                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
-                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="fade-in">
-                                                    <td>
-                                                        <div class="persian-date">۱۳ خرداد ۱۴۰۲</div>
-                                                        <small class="text-muted">14:30 - 15:15</small>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=32&background=f44336&color=fff" class="rounded-circle me-2" width="32" height="32">
-                                                            <span>رضا حسینی</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>جرمگیری</td>
-                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
-                                                    <td>
-                                                        <div class="table-actions">
-                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
-                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
-                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="fade-in">
-                                                    <td>
-                                                        <div class="persian-date">۱۲ خرداد ۱۴۰۲</div>
-                                                        <small class="text-muted">16:00 - 16:30</small>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=32&background=4caf50&color=fff" class="rounded-circle me-2" width="32" height="32">
-                                                            <span>زهرا کریمی</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>پر کردن دندان</td>
-                                                    <td><span class="status-badge status-canceled">لغو شده</span></td>
-                                                    <td>
-                                                        <div class="table-actions">
-                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
-                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
-                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="fade-in">
-                                                    <td>
-                                                        <div class="persian-date">۱۰ خرداد ۱۴۰۲</div>
-                                                        <small class="text-muted">09:00 - 09:45</small>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=محسن+رضایی&size=32&background=ff9800&color=fff" class="rounded-circle me-2" width="32" height="32">
-                                                            <span>محسن رضایی</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>معاینه عمومی</td>
-                                                    <td><span class="status-badge status-completed">تکمیل شده</span></td>
-                                                    <td>
-                                                        <div class="table-actions">
-                                                            <button class="btn btn-sm btn-outline-primary" title="مشاهده"><i class="bi bi-eye"></i></button>
-                                                            <button class="btn btn-sm btn-outline-success" title="تکمیل"><i class="bi bi-check-lg"></i></button>
-                                                            <button class="btn btn-sm btn-outline-danger" title="لغو"><i class="bi bi-x-lg"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                </td>
+                                <td data-label="خدمت">عصب‌کشی</td>
+                                <td data-label="وضعیت"><span class="status-badge status-pending">در انتظار</span></td>
+                                <td data-label="توضیحات"><small class="text-muted">دندان آسیاب شماره 3</small></td>
+                                <td data-label="عملیات">
+                                    <div class="table-actions d-flex">
+                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" title="تایید">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="لغو">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
                                     </div>
-                                    
-                                    <nav aria-label="Page navigation" class="mt-4">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">قبلی</a>
-                                            </li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">بعدی</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td data-label="تاریخ و زمان">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">۱۴ خرداد ۱۴۰۲</span>
+                                        <small class="text-muted">11:00 - 11:45</small>
+                                    </div>
+                                </td>
+                                <td data-label="بیمار">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=36&background=3aa5ba&color=fff" class="patient-avatar">
+                                        <div class="d-flex flex-column">
+                                            <span>فاطمه احمدی</span>
+                                            <small class="text-muted">09121234567</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="خدمت">روکش دندان</td>
+                                <td data-label="وضعیت"><span class="status-badge status-pending">در انتظار</span></td>
+                                <td data-label="توضیحات"><small class="text-muted">دندان جلو شماره 2</small></td>
+                                <td data-label="عملیات">
+                                    <div class="table-actions d-flex">
+                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success" title="تایید">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="لغو">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td data-label="تاریخ و زمان">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">۱۳ خرداد ۱۴۰۲</span>
+                                        <small class="text-muted">14:30 - 15:15</small>
+                                    </div>
+                                </td>
+                                <td data-label="بیمار">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=36&background=f44336&color=fff" class="patient-avatar">
+                                        <div class="d-flex flex-column">
+                                            <span>رضا حسینی</span>
+                                            <small class="text-muted">09021234567</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="خدمت">جرمگیری</td>
+                                <td data-label="وضعیت"><span class="status-badge status-completed">تکمیل شده</span></td>
+                                <td data-label="توضیحات"><small class="text-muted">جرمگیری کامل</small></td>
+                                <td data-label="عملیات">
+                                    <div class="table-actions d-flex">
+                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" title="چاپ رسید">
+                                            <i class="bi bi-printer"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td data-label="تاریخ و زمان">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">۱۲ خرداد ۱۴۰۲</span>
+                                        <small class="text-muted">16:00 - 16:30</small>
+                                    </div>
+                                </td>
+                                <td data-label="بیمار">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=36&background=4caf50&color=fff" class="patient-avatar">
+                                        <div class="d-flex flex-column">
+                                            <span>زهرا کریمی</span>
+                                            <small class="text-muted">09371234567</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="خدمت">پر کردن دندان</td>
+                                <td data-label="وضعیت"><span class="status-badge status-canceled">لغو شده</span></td>
+                                <td data-label="توضیحات"><small class="text-muted">دلیل: مسافرت بیمار</small></td>
+                                <td data-label="عملیات">
+                                    <div class="table-actions d-flex">
+                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" title="زمان جدید">
+                                            <i class="bi bi-calendar-plus"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td data-label="تاریخ و زمان">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold">۱۰ خرداد ۱۴۰۲</span>
+                                        <small class="text-muted">09:00 - 09:45</small>
+                                    </div>
+                                </td>
+                                <td data-label="بیمار">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=محسن+رضایی&size=36&background=ff9800&color=fff" class="patient-avatar">
+                                        <div class="d-flex flex-column">
+                                            <span>محسن رضایی</span>
+                                            <small class="text-muted">09151234567</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="خدمت">معاینه عمومی</td>
+                                <td data-label="وضعیت"><span class="status-badge status-completed">تکمیل شده</span></td>
+                                <td data-label="توضیحات"><small class="text-muted">معاینه سالانه</small></td>
+                                <td data-label="عملیات">
+                                    <div class="table-actions d-flex">
+                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" title="چاپ رسید">
+                                            <i class="bi bi-printer"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+                
+                <nav aria-label="Page navigation" class="mt-4 p-3">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -906,63 +879,51 @@
     <div class="modal fade" id="newAppointmentModal" tabindex="-1" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
+                <div class="modal-header">
                     <h5 class="modal-title" id="newAppointmentModalLabel">ثبت نوبت جدید</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">بیمار <span class="text-danger">*</span></label>
-                                    <select class="form-select" required>
-                                        <option value="" selected disabled>انتخاب بیمار</option>
-                                        <option>علی محمدی</option>
-                                        <option>فاطمه احمدی</option>
-                                        <option>رضا حسینی</option>
-                                        <option>زهرا کریمی</option>
-                                        <option>محسن رضایی</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">تاریخ نوبت <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control persian-date" required>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">ساعت شروع <span class="text-danger">*</span></label>
-                                        <input type="time" class="form-control" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">مدت زمان (دقیقه) <span class="text-danger">*</span></label>
-                                        <select class="form-select" required>
-                                            <option value="30">30 دقیقه</option>
-                                            <option value="45">45 دقیقه</option>
-                                            <option value="60">60 دقیقه</option>
-                                            <option value="90">90 دقیقه</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="patientSelect" class="form-label">بیمار</label>
+                                <select class="form-select" id="patientSelect">
+                                    <option selected disabled>انتخاب بیمار...</option>
+                                    <option value="1">علی محمدی</option>
+                                    <option value="2">فاطمه احمدی</option>
+                                    <option value="3">رضا حسینی</option>
+                                    <option value="4">زهرا کریمی</option>
+                                    <option value="5">محسن رضایی</option>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">خدمات <span class="text-danger">*</span></label>
-                                    <select class="form-select" required>
-                                        <option value="" selected disabled>انتخاب خدمت</option>
-                                        <option>معاینه عمومی</option>
-                                        <option>عصب‌کشی</option>
-                                        <option>پر کردن دندان</option>
-                                        <option>جرمگیری</option>
-                                        <option>روکش دندان</option>
-                                        <option>لمینت</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">توضیحات</label>
-                                    <textarea class="form-control" rows="5" placeholder="توضیحات مربوط به نوبت..."></textarea>
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="serviceSelect" class="form-label">خدمت</label>
+                                <select class="form-select" id="serviceSelect">
+                                    <option selected disabled>انتخاب خدمت...</option>
+                                    <option value="1">معاینه عمومی</option>
+                                    <option value="2">عصب‌کشی</option>
+                                    <option value="3">پر کردن دندان</option>
+                                    <option value="4">جرمگیری</option>
+                                    <option value="5">روکش دندان</option>
+                                </select>
                             </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentDate" class="form-label">تاریخ نوبت</label>
+                                <input type="date" class="form-control" id="appointmentDate">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentTime" class="form-label">زمان نوبت</label>
+                                <input type="time" class="form-control" id="appointmentTime">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="appointmentNotes" class="form-label">توضیحات</label>
+                            <textarea class="form-control" id="appointmentNotes" rows="3" placeholder="توضیحات مربوط به نوبت..."></textarea>
                         </div>
                     </form>
                 </div>
@@ -974,30 +935,76 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- View Appointment Modal -->
+    <div class="modal fade" id="viewAppointmentModal" tabindex="-1" aria-labelledby="viewAppointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewAppointmentModalLabel">جزئیات نوبت</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-4 text-center">
+                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=80&background=2a7f8f&color=fff" class="rounded-circle mb-2">
+                            <h6 class="mb-0">علی محمدی</h6>
+                            <small class="text-muted">09351234567</small>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3">
+                                <h6 class="text-muted mb-1">تاریخ و زمان</h6>
+                                <p class="mb-0">۱۴ خرداد ۱۴۰۲ - 10:00 تا 10:30</p>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="text-muted mb-1">خدمت</h6>
+                                <p class="mb-0">عصب‌کشی</p>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="text-muted mb-1">وضعیت</h6>
+                                <span class="status-badge status-pending">در انتظار</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">توضیحات</h6>
+                        <p>دندان آسیاب شماره 3 نیاز به عصب‌کشی دارد. بیمار گزارش درد شدید هنگام جویدن دارد.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    <button type="button" class="btn btn-success">تایید نوبت</button>
+                    <button type="button" class="btn btn-danger">لغو نوبت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </body>
+        
     <script>
-        // تبدیل تاریخ میلادی به شمسی در فیلدهای تاریخ
-        document.addEventListener('DOMContentLoaded', function() {
-            const dateInputs = document.querySelectorAll('input[type="date"].persian-date');
+        // اعمال فیلترها
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const status = document.getElementById('statusFilter').value;
+            const service = document.getElementById('serviceFilter').value;
+            const startDate = document.getElementById('startDateFilter').value;
+            const endDate = document.getElementById('endDateFilter').value;
+            const searchTerm = document.getElementById('searchInput').value;
             
-            dateInputs.forEach(input => {
-                // تنظیم تاریخ پیش‌فرض به امروز
-                const today = new Date();
-                const formattedDate = today.toISOString().substr(0, 10);
-                input.value = formattedDate;
-                
-                // نمایش تاریخ به صورت شمسی (این بخش نیاز به کتابخانه تبدیل تاریخ دارد)
-                // در اینجا فقط نمایش نمونه قرار داده شده
-                input.addEventListener('change', function() {
-                    // کد تبدیل میلادی به شمسی باید اینجا قرار گیرد
-                });
-            });
+            // اینجا می‌توانید منطق فیلتر کردن را پیاده‌سازی کنید
+            console.log('فیلترها اعمال شدند:', {status, service, startDate, endDate, searchTerm});
             
-            // نمایش tooltip برای دکمه‌های عملیات
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
+            // نمایش پیام موفقیت
+            alert('فیلترها با موفقیت اعمال شدند!');
+        });
+        
+        // جستجو
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value;
+            console.log('جستجو برای:', searchTerm);
+            // اینجا می‌توانید منطق جستجو را پیاده‌سازی کنید
         });
     </script>
 </body>
