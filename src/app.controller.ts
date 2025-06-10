@@ -17,4 +17,16 @@ export class AppController {
     return { title: 'appointment' };
   }
 
+  @Get('/patient')
+  @Render('patient')
+  showPatientPage() {
+    return { title: 'patient' };
+  }
+
+  @Get('/pay')
+  @Render('pay')
+  showPayPage() {
+    return { title: 'pay' };
+  }
+
 } 
