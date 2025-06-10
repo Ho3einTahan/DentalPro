@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
    <style>
         :root {
             --primary-color: #2a7f8f;
@@ -148,10 +148,7 @@
         
         /* Responsive Improvements */
         @media (max-width: 992px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
+         
             
             .main-content {
                 margin-right: 70px;
@@ -175,14 +172,6 @@
                 padding: 15px;
             }
             
-            .sidebar {
-                width: 280px;
-                right: -280px;
-            }
-            
-            .sidebar.show {
-                right: 0;
-            }
             
             .stat-card {
                 margin-bottom: 15px;
@@ -223,27 +212,7 @@
         .main-content-expanded {
             margin-right: 80px;
         }
-        
-        .nav-link {
-            color: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-            margin: 3px 0;
-            padding: 12px 15px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
-        
-        .nav-link i {
-            margin-left: 10px;
-            font-size: 1.1rem;
-            min-width: 20px;
-            text-align: center;
-        }
+     
         
         .progress {
             height: 8px;
@@ -404,21 +373,7 @@
             border: 1px solid #ddd;
         }
            
-        .logo {
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-        }
-        
-        .logo i {
-            margin-left: 10px;
-            color: var(--dental-teal);
-        }
-        
-        /* Animation */
+                /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -427,26 +382,7 @@
         .fade-in {
             animation: fadeIn 0.4s ease-out forwards;
         }
-        
-        /* Tab styles */
-        .nav-tabs {
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .nav-tabs .nav-link {
-            color: var(--secondary-color);
-            border: none;
-            padding: 10px 20px;
-            font-weight: 500;
-            background-color: transparent;
-        }
-        
-        .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-            background-color: transparent;
-        }
-        
+
         /* Modal styles */
         .modal-content {
             border: none;
@@ -521,15 +457,7 @@
             .main-content {
                 margin-right: 80px;
             }
-             
-            .logo span {
-                display: none;
-            }
-            
-            .logo i {
-                margin-left: 0;
-                font-size: 1.8rem;
-            }
+        
         }
         
         @media (max-width: 768px) {
@@ -614,8 +542,8 @@
 
 </head>
 <body>
-    <div class="d-flex">
 
+<div class="d-flex">
         <!-- Main Content -->
         <div class="main-content flex-grow-1 p-4" id="main-content">
             <div class="tab-content">
@@ -942,5 +870,6 @@
             </div>
         </div>
 </div>
+
 </body>
 </html>
