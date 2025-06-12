@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-   <style>
+    <title>مدیریت نوبت‌های دندانپزشکی</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
         :root {
             --primary-color: #2a7f8f;
             --primary-light: #e0f7fa;
@@ -21,6 +22,120 @@
             --dental-blue: #e0f7fa;
             --dental-teal: #b2ebf2;
         }
+
+        /* استایل‌های سفارشی برای مودال */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #2a7f8f 0%, #3aa5ba 100%);
+    }
+    
+    .patient-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        transition: all 0.3s ease;
+    }
+    
+    .patient-avatar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(42, 127, 143, 0.3);
+    }
+    
+    .patient-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1e3a4a;
+    }
+    
+    .patient-meta {
+        font-size: 0.85rem;
+    }
+    
+    .info-card {
+        background-color: #f8fafb;
+        border-left: 3px solid var(--primary-color);
+        transition: all 0.3s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-label {
+        font-size: 0.9rem;
+        color: #2a7f8f;
+    }
+    
+    .info-value {
+        font-size: 1rem;
+        color: #1e3a4a;
+    }
+    
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .status-pending {
+        background-color: rgba(255, 152, 0, 0.15);
+        color: #e65100;
+    }
+    
+    .animate-pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+    
+    .timeline {
+        position: relative;
+        padding-right: 20px;
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-bottom: 20px;
+    }
+    
+    .timeline-badge {
+        position: absolute;
+        right: -10px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        z-index: 2;
+    }
+    
+    .timeline-content {
+        position: relative;
+        margin-right: 30px;
+    }
+    
+    .timeline-item:not(:last-child) .timeline-content:after {
+        content: '';
+        position: absolute;
+        right: -25px;
+        top: 20px;
+        bottom: -20px;
+        width: 2px;
+        background: #e0f7fa;
+    }
         
         body {
             font-family: Vazir, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,292 +143,52 @@
             color: #333;
         }
 
-        .main-content {
-            margin-right: 280px;
-            transition: all 0.3s;
-            padding: 20px;
-        }
-        
-        .main-content-expanded {
-            margin-right: 70px;
-        }
-        
-        /* Improved Stat Cards */
-        .stat-card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-            overflow: hidden;
-            position: relative;
-            border-right: 4px solid;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-card.primary {
-            border-right-color: var(--primary-color);
-            background-color: white;
-        }
-        
-        .stat-card.success {
-            border-right-color: var(--success-color);
-            background-color: white;
-        }
-        
-        .stat-card.warning {
-            border-right-color: var(--warning-color);
-            background-color: white;
-        }
-        
-        .stat-card.danger {
-            border-right-color: var(--danger-color);
-            background-color: white;
-        }
-        
-        .stat-card .card-body {
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .stat-card h3 {
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-        
-        .stat-card h6 {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-        
-        .stat-card .icon-wrapper {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .stat-card.primary .icon-wrapper {
-            background-color: rgba(42, 127, 143, 0.1);
-            color: var(--primary-color);
-        }
-        
-        .stat-card.success .icon-wrapper {
-            background-color: rgba(76, 175, 80, 0.1);
-            color: var(--success-color);
-        }
-        
-        .stat-card.warning .icon-wrapper {
-            background-color: rgba(255, 152, 0, 0.1);
-            color: var(--warning-color);
-        }
-        
-        .stat-card.danger .icon-wrapper {
-            background-color: rgba(244, 67, 54, 0.1);
-            color: var(--danger-color);
-        }
-        
-        .stat-card .trend {
-            display: flex;
-            align-items: center;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-        
-        .stat-card .trend.up {
-            color: var(--success-color);
-        }
-        
-        .stat-card .trend.down {
-            color: var(--danger-color);
-        }
-        
-        .stat-card .trend i {
-            margin-left: 5px;
-        }
-        
-        /* Responsive Improvements */
-        @media (max-width: 992px) {
-     
-            
-            .main-content {
-                margin-right: 70px;
-                padding: 15px;
-            }
-            
-            .stat-card h3 {
-                font-size: 1.3rem;
-            }
-            
-            .stat-card .icon-wrapper {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                margin-right: 0;
-                padding: 15px;
-            }
-            
-            
-            .stat-card {
-                margin-bottom: 15px;
-            }
-            
-            .stat-card h3 {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .stat-card .card-body {
-                padding: 15px;
-            }
-            
-            .stat-card h3 {
-                font-size: 1.1rem;
-            }
-            
-            .stat-card h6 {
-                font-size: 0.8rem;
-            }
-            
-            .stat-card .icon-wrapper {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-                top: 15px;
-                left: 15px;
-            }
-        }
-        
-        .main-content {
-            margin-right: 280px;
-            transition: all 0.3s;
-        }
-        
-        .progress {
-            height: 8px;
-            border-radius: 4px;
-        }
-        
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin-bottom: 20px;
-            background-color: white;
-        }
-        
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-header {
-            background-color: white;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 15px 20px;
-            border-radius: 10px 10px 0 0 !important;
-        }
-        
-        .card-title {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 0;
-        }
-        
-        .table-responsive {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .table {
-            margin-bottom: 0;
-        }
-        
-        .table th {
-            background-color: var(--dental-teal);
-            border-top: none;
-            font-weight: 600;
-            color: var(--dark-color);
-            padding: 12px 15px;
-        }
-        
-        .table td {
-            padding: 12px 15px;
-            vertical-align: middle;
-        }
-        
-        .table-hover tbody tr:hover {
-            background-color: rgba(58, 165, 186, 0.05);
-        }
-        
-        .badge {
-            padding: 5px 10px;
-            font-weight: 500;
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }
-        
+        /* بهبود دکمه‌ها */
         .btn {
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 0.85rem;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         .btn-primary {
             background-color: var(--primary-color);
-            border-color: var(--primary-color);
+            color: white;
         }
         
         .btn-primary:hover {
             background-color: #236a77;
-            border-color: #236a77;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            border-color: var(--danger-color);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-            border-color: var(--warning-color);
         }
         
         .btn-outline-primary {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
             color: var(--primary-color);
-            border-color: var(--primary-color);
+        }
+
+        .main-content {
+            margin-right: 280px;
+            transition: all 0.3s;
+        }
+        
+        .main-content-expanded {
+            margin-right: 80px;
         }
         
         .btn-outline-primary:hover {
@@ -321,12 +196,171 @@
             color: white;
         }
         
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-light {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-lg {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* بهبود مودال‌ها */
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 24px;
+            border-bottom: none;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        
+        .btn-close {
+            filter: invert(1);
+        }
+        
+        /* کارت‌های اطلاعات بیمار */
+        .patient-card {
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 16px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        
+        .patient-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .patient-info {
+            padding-right: 16px;
+        }
+        
+        .patient-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .patient-meta {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .info-item {
+            margin-bottom: 12px;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-weight: 500;
+        }
+        
+        /* بهبود جدول نوبت‌ها */
+        .appointment-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .appointment-table th {
+            background-color: var(--dental-teal);
+            color: var(--dark-color);
+            font-weight: 600;
+            padding: 12px 16px;
+            text-align: right;
+            border: none;
+        }
+        
+        .appointment-table td {
+            padding: 12px 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background-color: white;
+        }
+        
+        .appointment-table tr:first-child td {
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .appointment-table tr:hover td {
+            background-color: var(--primary-light);
+        }
+        
+        /* وضعیت‌های نوبت */
         .status-badge {
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         
         .status-pending {
@@ -344,520 +378,379 @@
             color: #c62828;
         }
         
-        .toggle-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 10px;
+        .status-in-progress {
+            background-color: rgba(0, 188, 212, 0.15);
+            color: #00838f;
+        }
+        
+        /* کارت خدمات */
+        .service-card {
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background-color: white;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .service-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+        
+        .service-duration {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        /* فیلدهای فرم */
+        .form-control, .form-select {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
             transition: all 0.3s;
         }
         
-        .toggle-btn:hover {
-            color: var(--dental-teal);
-        }
-        
-        .search-box {
-            position: relative;
-        }
-        
-        .search-box input {
-            padding-right: 40px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-        }
-           
-        
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-
-        /* Modal styles */
-        .modal-content {
-            border: none;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .modal-header {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            background-color: var(--dental-teal);
-            color: white;
-            padding: 15px 20px;
-        }
-        
-        .modal-title {
-            font-weight: 600;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .modal-footer {
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 15px 20px;
-        }
-        
-        .form-control, .form-select {
-            padding: 10px 15px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(42, 127, 143, 0.2);
         }
         
         .form-label {
             font-weight: 500;
             margin-bottom: 8px;
-            color: var(--dark-color);
+            display: block;
         }
         
-        /* Service categories */
-        .service-category {
-            border-left: 4px solid var(--primary-color);
-            padding: 15px;
-            margin-bottom: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .service-category h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px dashed #eee;
-        }
-        
-        /* Invoice styles */
-        .invoice-header {
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .invoice-table th {
-            background-color: #f8f9fa;
-        }
-        
-
-        /* اضافه کردن این استایل‌ها به بخش استایل‌های موجود */
-
-/* بهبود فیلترها */
-.filter-box .form-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #6c757d;
-    margin-bottom: 0.25rem;
-}
-
-.filter-box .form-control,
-.filter-box .form-select {
-    font-size: 0.85rem;
-    padding: 0.35rem 0.75rem;
-    height: calc(1.5em + 0.5rem + 2px);
-}
-
-.filter-box .input-group {
-    height: calc(1.5em + 0.5rem + 2px);
-}
-
-.filter-box .btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
-}
-
-/* بهبود کارت فیلتر */
-.filter-box .card {
-    border: none;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
-}
-
-.filter-box .card-body {
-    padding: 1.25rem;
-}
-
-/* واکنش‌گرایی بهتر */
-@media (max-width: 768px) {
-    .filter-box .col-md-6 {
-        margin-bottom: 0.75rem;
-    }
-    
-    .filter-box .d-flex.gap-2 {
-        justify-content: flex-end;
-    }
-}
-
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            
-            .main-content {
-                margin-right: 80px;
-            }
-        
-        }
-        
-        @media (max-width: 768px) {
-            .card-header {
-                flex-direction: column;
-                align-items: flex-start !important;
-            }
-            
-            .card-header .btn {
-                margin-top: 10px;
-                width: 100%;
-            }
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #1e6d7a;
-        }
-        
-        /* Dental theme elements */
-        .dental-bg {
-            background-color: var(--dental-blue);
-        }
-        
-        .tooth-icon {
-            color: var(--primary-color);
-            margin-left: 5px;
-        }
-        
-       /* Dental Nav */
-        .dental-nav {
-            background-color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        /* هدر صفحه */
+        .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 24px;
+            padding: 16px 24px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
-        /* Modal full height on mobile */
+        .page-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* فیلترها */
+        .filter-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* صفحه‌بندی */
+        .pagination {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .page-item .page-link {
+            border-radius: 8px;
+            border: none;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .page-item.disabled .page-link {
+            color: #6c757d;
+        }
+        
+        /* ابزارک‌ها */
+        .tooltip-inner {
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        
+        /* واکنش‌گرایی */
         @media (max-width: 768px) {
             .modal-dialog {
-                margin: 0.5rem auto;
-                max-width: calc(100% - 1rem);
+                margin: 10px;
             }
             
             .modal-content {
-                height: calc(100vh - 1rem);
+                border-radius: 10px;
             }
             
-            .modal-body {
-                overflow-y: auto;
-                max-height: calc(100vh - 150px);
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .appointment-table td {
+                padding: 10px 12px;
             }
         }
-        
-        /* Better table actions */
-        .table-actions {
-            display: flex;
-            gap: 5px;
-        }
-        
-        /* Custom checkbox */
-        .form-check-input:checked {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
     </style>
-
 </head>
 <body>
 
-     <div class="d-flex">
+    <div class="d-flex">
         <!-- Main Content -->
         <div class="main-content flex-grow-1 p-4" id="main-content">
             <div class="tab-content">
 
-        <div class="dental-nav d-flex justify-content-between align-items-center">
-            <h3 class="mb-0">مدیریت نوبت‌ها <i class="bi bi-calendar-check tooth-icon"></i></h3>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
-                <i class="bi bi-plus-lg me-2"></i>نوبت جدید
-            </button>
-        </div>
-        
-      <!-- Filter Box - تمام عرض بالای جدول -->
-<div class="card mb-4">
-    <div class="card-body">
-        <h5 class="card-title mb-4">فیلتر نوبت‌ها</h5>
+    <!-- هدر صفحه -->
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="bi bi-calendar2-check"></i>
+            مدیریت نوبت‌ها
+        </h1>
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newAppointmentModal">
+            <i class="bi bi-plus-lg"></i>
+            نوبت جدید
+        </button>
+    </div>
+    
+    <!-- فیلترها -->
+    <div class="filter-card">
+        <h3 class="filter-title">
+            <i class="bi bi-funnel"></i>
+            فیلتر نوبت‌ها
+        </h3>
         <div class="row g-3">
-            <!-- وضعیت نوبت -->
-            <div class="col-md-6 col-lg-2">
-                <label for="statusFilter" class="form-label small fw-bold text-muted">وضعیت</label>
-                <select class="form-select form-select-sm" id="statusFilter">
-                    <option value="all" selected>همه وضعیت‌ها</option>
-                    <option value="pending">در انتظار</option>
-                    <option value="completed">تکمیل شده</option>
-                    <option value="canceled">لغو شده</option>
+            <div class="col-md-6 col-lg-3">
+                <label class="form-label">وضعیت نوبت</label>
+                <select class="form-select">
+                    <option selected>همه وضعیت‌ها</option>
+                    <option>در انتظار</option>
+                    <option>تکمیل شده</option>
+                    <option>لغو شده</option>
+                    <option>در حال انجام</option>
                 </select>
             </div>
-            
-            <!-- خدمت -->
-            <div class="col-md-6 col-lg-2">
-                <label for="serviceFilter" class="form-label small fw-bold text-muted">خدمت</label>
-                <select class="form-select form-select-sm" id="serviceFilter">
-                    <option value="all" selected>همه خدمات</option>
-                    <option value="1">معاینه عمومی</option>
-                    <option value="2">عصب‌کشی</option>
-                    <option value="3">پر کردن دندان</option>
-                    <option value="4">جرمگیری</option>
-                    <option value="5">روکش دندان</option>
+            <div class="col-md-6 col-lg-3">
+                <label class="form-label">نوع خدمت</label>
+                <select class="form-select">
+                    <option selected>همه خدمات</option>
+                    <option>معاینه عمومی</option>
+                    <option>عصب‌کشی</option>
+                    <option>پر کردن دندان</option>
+                    <option>جرمگیری</option>
+                    <option>روکش دندان</option>
                 </select>
             </div>
-            
-            <!-- تاریخ شروع -->
-            <div class="col-md-6 col-lg-2">
-                <label for="startDateFilter" class="form-label small fw-bold text-muted">از تاریخ</label>
-                <input type="date" class="form-control form-control-sm" id="startDateFilter">
+            <div class="col-md-6 col-lg-3">
+                <label class="form-label">از تاریخ</label>
+                <input type="date" class="form-control">
             </div>
-            
-            <!-- تاریخ پایان -->
-            <div class="col-md-6 col-lg-2">
-                <label for="endDateFilter" class="form-label small fw-bold text-muted">تا تاریخ</label>
-                <input type="date" class="form-control form-control-sm" id="endDateFilter">
+            <div class="col-md-6 col-lg-3">
+                <label class="form-label">تا تاریخ</label>
+                <input type="date" class="form-control">
             </div>
-            
-            <!-- جستجو -->
-            <div class="col-md-12 col-lg-3">
-                <label for="searchInput" class="form-label small fw-bold text-muted">جستجو</label>
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control" id="searchInput" placeholder="نام بیمار یا تلفن...">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- دکمه‌های اقدام -->
-            <div class="col-md-12 col-lg-1 d-flex align-items-end">
-                <div class="d-flex gap-2 w-100">
-                    <button class="btn btn-sm btn-primary flex-grow-1" id="applyFilters">
-                        <i class="bi bi-funnel"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-secondary" id="resetFilters">
+            <div class="col-12">
+                <div class="d-flex justify-content-end gap-3">
+                    <button class="btn btn-light">
                         <i class="bi bi-arrow-counterclockwise"></i>
+                        بازنشانی
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="bi bi-funnel"></i>
+                        اعمال فیلتر
                     </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-        
-        <!-- Appointments Table -->
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">لیست نوبت‌ها</h5>
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-primary">
-                        <i class="bi bi-download me-2"></i>خروجی Excel
-                    </button>
-                </div>
+    
+    <!-- جدول نوبت‌ها -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+                <i class="bi bi-list-ul"></i>
+                لیست نوبت‌ها
+            </h5>
+            <button class="btn btn-outline-primary">
+                <i class="bi bi-download"></i>
+                خروجی Excel
+            </button>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="appointment-table">
+                    <thead>
+                        <tr>
+                            <th>تاریخ و زمان</th>
+                            <th>بیمار</th>
+                            <th>خدمت</th>
+                            <th>وضعیت</th>
+                            <th>توضیحات</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- نوبت در انتظار -->
+                        <tr>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-bold">۱۴ خرداد ۱۴۰۲</span>
+                                    <small class="text-muted">10:00 - 10:30</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=40&background=2a7f8f&color=fff" 
+                                         class="rounded-circle me-3" width="40" height="40">
+                                    <div>
+                                        <div class="fw-medium">علی محمدی</div>
+                                        <small class="text-muted">09351234567</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary bg-opacity-10 text-primary">عصب‌کشی</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-pending">
+                                    <i class="bi bi-clock"></i>
+                                    در انتظار
+                                </span>
+                            </td>
+                            <td>
+                                <small>دندان آسیاب شماره 3</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary btn-icon" data-bs-toggle="tooltip" title="مشاهده جزئیات">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success btn-icon" data-bs-toggle="tooltip" title="تایید نوبت">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="لغو نوبت">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- نوبت تکمیل شده -->
+                        <tr>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-bold">۱۳ خرداد ۱۴۰۲</span>
+                                    <small class="text-muted">15:00 - 15:45</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=40&background=3aa5ba&color=fff" 
+                                         class="rounded-circle me-3" width="40" height="40">
+                                    <div>
+                                        <div class="fw-medium">فاطمه احمدی</div>
+                                        <small class="text-muted">09123456789</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success">جرمگیری</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-completed">
+                                    <i class="bi bi-check-circle"></i>
+                                    تکمیل شده
+                                </span>
+                            </td>
+                            <td>
+                                <small>جرمگیری کامل دندان‌ها</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary btn-icon" data-bs-toggle="tooltip" title="مشاهده جزئیات">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary btn-icon" data-bs-toggle="tooltip" title="چاپ رسید">
+                                        <i class="bi bi-printer"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- نوبت لغو شده -->
+                        <tr>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-bold">۱۲ خرداد ۱۴۰۲</span>
+                                    <small class="text-muted">11:30 - 12:15</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=40&background=6c757d&color=fff" 
+                                         class="rounded-circle me-3" width="40" height="40">
+                                    <div>
+                                        <div class="fw-medium">رضا حسینی</div>
+                                        <small class="text-muted">09011223344</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-danger bg-opacity-10 text-danger">معاینه عمومی</span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-canceled">
+                                    <i class="bi bi-x-circle"></i>
+                                    لغو شده
+                                </span>
+                            </td>
+                            <td>
+                                <small>بیمار تماس گرفت و لغو کرد</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-primary btn-icon" data-bs-toggle="tooltip" title="مشاهده جزئیات">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-warning btn-icon" data-bs-toggle="tooltip" title="تنظیم مجدد">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>تاریخ و زمان</th>
-                                <th>بیمار</th>
-                                <th>خدمت</th>
-                                <th>وضعیت</th>
-                                <th>توضیحات</th>
-                                <th>عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="fade-in">
-                                <td data-label="تاریخ و زمان">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-bold">۱۴ خرداد ۱۴۰۲</span>
-                                        <small class="text-muted">10:00 - 10:30</small>
-                                    </div>
-                                </td>
-                                <td data-label="بیمار">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=36&background=2a7f8f&color=fff" class="patient-avatar">
-                                        <div class="d-flex flex-column">
-                                            <span>علی محمدی</span>
-                                            <small class="text-muted">09351234567</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="خدمت">عصب‌کشی</td>
-                                <td data-label="وضعیت"><span class="status-badge status-pending">در انتظار</span></td>
-                                <td data-label="توضیحات"><small class="text-muted">دندان آسیاب شماره 3</small></td>
-                                <td data-label="عملیات">
-                                    <div class="table-actions d-flex">
-                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-success" title="تایید">
-                                            <i class="bi bi-check-lg"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="لغو">
-                                            <i class="bi bi-x-lg"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="fade-in">
-                                <td data-label="تاریخ و زمان">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-bold">۱۴ خرداد ۱۴۰۲</span>
-                                        <small class="text-muted">11:00 - 11:45</small>
-                                    </div>
-                                </td>
-                                <td data-label="بیمار">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=فاطمه+احمدی&size=36&background=3aa5ba&color=fff" class="patient-avatar">
-                                        <div class="d-flex flex-column">
-                                            <span>فاطمه احمدی</span>
-                                            <small class="text-muted">09121234567</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="خدمت">روکش دندان</td>
-                                <td data-label="وضعیت"><span class="status-badge status-pending">در انتظار</span></td>
-                                <td data-label="توضیحات"><small class="text-muted">دندان جلو شماره 2</small></td>
-                                <td data-label="عملیات">
-                                    <div class="table-actions d-flex">
-                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-success" title="تایید">
-                                            <i class="bi bi-check-lg"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="لغو">
-                                            <i class="bi bi-x-lg"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="fade-in">
-                                <td data-label="تاریخ و زمان">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-bold">۱۳ خرداد ۱۴۰۲</span>
-                                        <small class="text-muted">14:30 - 15:15</small>
-                                    </div>
-                                </td>
-                                <td data-label="بیمار">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=رضا+حسینی&size=36&background=f44336&color=fff" class="patient-avatar">
-                                        <div class="d-flex flex-column">
-                                            <span>رضا حسینی</span>
-                                            <small class="text-muted">09021234567</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="خدمت">جرمگیری</td>
-                                <td data-label="وضعیت"><span class="status-badge status-completed">تکمیل شده</span></td>
-                                <td data-label="توضیحات"><small class="text-muted">جرمگیری کامل</small></td>
-                                <td data-label="عملیات">
-                                    <div class="table-actions d-flex">
-                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary" title="چاپ رسید">
-                                            <i class="bi bi-printer"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="fade-in">
-                                <td data-label="تاریخ و زمان">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-bold">۱۲ خرداد ۱۴۰۲</span>
-                                        <small class="text-muted">16:00 - 16:30</small>
-                                    </div>
-                                </td>
-                                <td data-label="بیمار">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=زهرا+کریمی&size=36&background=4caf50&color=fff" class="patient-avatar">
-                                        <div class="d-flex flex-column">
-                                            <span>زهرا کریمی</span>
-                                            <small class="text-muted">09371234567</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="خدمت">پر کردن دندان</td>
-                                <td data-label="وضعیت"><span class="status-badge status-canceled">لغو شده</span></td>
-                                <td data-label="توضیحات"><small class="text-muted">دلیل: مسافرت بیمار</small></td>
-                                <td data-label="عملیات">
-                                    <div class="table-actions d-flex">
-                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary" title="زمان جدید">
-                                            <i class="bi bi-calendar-plus"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="fade-in">
-                                <td data-label="تاریخ و زمان">
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-bold">۱۰ خرداد ۱۴۰۲</span>
-                                        <small class="text-muted">09:00 - 09:45</small>
-                                    </div>
-                                </td>
-                                <td data-label="بیمار">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=محسن+رضایی&size=36&background=ff9800&color=fff" class="patient-avatar">
-                                        <div class="d-flex flex-column">
-                                            <span>محسن رضایی</span>
-                                            <small class="text-muted">09151234567</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label="خدمت">معاینه عمومی</td>
-                                <td data-label="وضعیت"><span class="status-badge status-completed">تکمیل شده</span></td>
-                                <td data-label="توضیحات"><small class="text-muted">معاینه سالانه</small></td>
-                                <td data-label="عملیات">
-                                    <div class="table-actions d-flex">
-                                        <button class="btn btn-sm btn-outline-primary" title="مشاهده" data-bs-toggle="modal" data-bs-target="#viewAppointmentModal">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary" title="چاپ رسید">
-                                            <i class="bi bi-printer"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <nav aria-label="Page navigation" class="mt-4 p-3">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+            
+            <!-- صفحه‌بندی -->
+            <div class="p-3 d-flex justify-content-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
                                 <i class="bi bi-chevron-right"></i>
                             </a>
                         </li>
@@ -865,7 +758,7 @@
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">
+                            <a class="page-link" href="#" aria-label="Previous">
                                 <i class="bi bi-chevron-left"></i>
                             </a>
                         </li>
@@ -874,138 +767,338 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- New Appointment Modal -->
-    <div class="modal fade" id="newAppointmentModal" tabindex="-1" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newAppointmentModalLabel">ثبت نوبت جدید</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- مودال نوبت جدید -->
+<div class="modal fade" id="newAppointmentModal" tabindex="-1" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      
+      <!-- هدر -->
+      <div class="modal-header bg-primary text-white rounded-top">
+        <h5 class="modal-title d-flex align-items-center gap-2">
+          <i class="bi bi-calendar-plus fs-4"></i> ثبت نوبت جدید
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- بدنه فرم -->
+      <div class="modal-body">
+        <form>
+          <div class="row g-4">
+
+            <!-- اطلاعات بیمار -->
+            <div class="col-md-6">
+              <div class="border rounded-3 p-3 h-100 shadow-sm bg-light-subtle">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <img src="https://ui-avatars.com/api/?name=بیمار+جدید&size=80&background=2a7f8f&color=fff" class="rounded-circle border" width="64" height="64">
+                  <div>
+                    <div class="fw-bold fs-5">بیمار جدید</div>
+                    <small class="text-muted">لطفا بیمار را انتخاب کنید</small>
+                  </div>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="patientSelect" class="form-label">بیمار</label>
-                                <select class="form-select" id="patientSelect">
-                                    <option selected disabled>انتخاب بیمار...</option>
-                                    <option value="1">علی محمدی</option>
-                                    <option value="2">فاطمه احمدی</option>
-                                    <option value="3">رضا حسینی</option>
-                                    <option value="4">زهرا کریمی</option>
-                                    <option value="5">محسن رضایی</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="serviceSelect" class="form-label">خدمت</label>
-                                <select class="form-select" id="serviceSelect">
-                                    <option selected disabled>انتخاب خدمت...</option>
-                                    <option value="1">معاینه عمومی</option>
-                                    <option value="2">عصب‌کشی</option>
-                                    <option value="3">پر کردن دندان</option>
-                                    <option value="4">جرمگیری</option>
-                                    <option value="5">روکش دندان</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentDate" class="form-label">تاریخ نوبت</label>
-                                <input type="date" class="form-control" id="appointmentDate">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentTime" class="form-label">زمان نوبت</label>
-                                <input type="time" class="form-control" id="appointmentTime">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="appointmentNotes" class="form-label">توضیحات</label>
-                            <textarea class="form-control" id="appointmentNotes" rows="3" placeholder="توضیحات مربوط به نوبت..."></textarea>
-                        </div>
-                    </form>
+
+                <div class="mb-3">
+                  <label class="form-label">انتخاب بیمار</label>
+                  <select class="form-select">
+                    <option selected disabled>انتخاب بیمار...</option>
+                    <option>علی محمدی - 09351234567</option>
+                    <option>فاطمه احمدی - 09123456789</option>
+                    <option>رضا حسینی - 09011223344</option>
+                    <option>زهرا کریمی - 09121112233</option>
+                  </select>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-primary">ثبت نوبت</button>
+
+                <div class="mb-3">
+                  <label class="form-label">تلفن همراه</label>
+                  <input type="tel" class="form-control" placeholder="مثال: 09123456789">
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
 
-    <!-- View Appointment Modal -->
-    <div class="modal fade" id="viewAppointmentModal" tabindex="-1" aria-labelledby="viewAppointmentModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewAppointmentModalLabel">جزئیات نوبت</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- اطلاعات خدمت -->
+            <div class="col-md-6">
+              <div class="border rounded-3 p-3 h-100 shadow-sm bg-light-subtle">
+                <div class="mb-3">
+                  <label class="form-label">نوع خدمت</label>
+                  <select class="form-select">
+                    <option selected disabled>انتخاب خدمت...</option>
+                    <option>معاینه عمومی (30 دقیقه)</option>
+                    <option>عصب‌کشی (60 دقیقه)</option>
+                    <option>پر کردن دندان (45 دقیقه)</option>
+                    <option>جرمگیری (45 دقیقه)</option>
+                    <option>روکش دندان (60 دقیقه)</option>
+                  </select>
                 </div>
-                <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-4 text-center">
-                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=80&background=2a7f8f&color=fff" class="rounded-circle mb-2">
-                            <h6 class="mb-0">علی محمدی</h6>
-                            <small class="text-muted">09351234567</small>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">تاریخ نوبت</label>
+                    <input type="date" class="form-control">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">زمان نوبت</label>
+                    <input type="time" class="form-control">
+                  </div>
+                </div>
+
+                <div>
+                  <div class="small text-muted">مدت زمان خدمت انتخابی بعد از انتخاب نمایش داده می‌شود.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- توضیحات -->
+            <div class="col-12">
+              <label class="form-label">توضیحات</label>
+              <textarea class="form-control" rows="3" placeholder="توضیحات مربوط به نوبت..."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- فوتر -->
+      <div class="modal-footer bg-light rounded-bottom d-flex flex-column flex-md-row justify-content-between gap-2 p-3">
+        <button type="button" class="btn btn-outline-secondary btn-lg w-100 w-md-auto" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg me-2"></i> انصراف
+        </button>
+        <button type="button" class="btn btn-primary btn-lg w-100 w-md-auto">
+          <i class="bi bi-check-lg me-2"></i> ثبت نوبت
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- مودال مشاهده نوبت - نسخه بهینه شده -->
+<div class="modal fade" id="viewAppointmentModal" tabindex="-1" aria-labelledby="viewAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <!-- هدر مودال -->
+            <div class="modal-header bg-gradient-primary text-white">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-calendar2-check me-2"></i>
+                    جزئیات کامل نوبت دندانپزشکی
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- بدنه مودال -->
+            <div class="modal-body p-4">
+                <!-- کارت بیمار -->
+                <div class="patient-card bg-white rounded-3 p-4 mb-4 shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative">
+                            <img src="https://ui-avatars.com/api/?name=علی+محمدی&size=80&background=2a7f8f&color=fff" 
+                                 class="patient-avatar shadow">
+                            <span class="badge bg-success position-absolute bottom-0 start-0 rounded-pill">
+                                <i class="bi bi-check-circle-fill me-1"></i>
+                                بیمار دائمی
+                            </span>
                         </div>
-                        <div class="col-8">
-                            <div class="mb-3">
-                                <h6 class="text-muted mb-1">تاریخ و زمان</h6>
-                                <p class="mb-0">۱۴ خرداد ۱۴۰۲ - 10:00 تا 10:30</p>
+                        <div class="patient-info me-3">
+                            <h4 class="patient-name text-dark mb-1">علی محمدی</h4>
+                            <div class="d-flex flex-wrap gap-3">
+                                <span class="patient-meta text-muted">
+                                    <i class="bi bi-telephone me-1"></i>
+                                    09351234567
+                                </span>
+                                <span class="patient-meta text-muted">
+                                    <i class="bi bi-person-vcard me-1"></i>
+                                    35 ساله
+                                </span>
+                                <span class="patient-meta text-muted">
+                                    <i class="bi bi-heart-pulse me-1"></i>
+                                    سابقه بیماری: ندارد
+                                </span>
                             </div>
-                            <div class="mb-3">
-                                <h6 class="text-muted mb-1">خدمت</h6>
-                                <p class="mb-0">عصب‌کشی</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- اطلاعات اصلی نوبت -->
+                <div class="row g-4 mb-4">
+                    <!-- ستون سمت راست -->
+                    <div class="col-md-6">
+                        <!-- تاریخ و زمان -->
+                        <div class="info-card bg-light-primary p-3 rounded-3 h-100">
+                            <div class="info-item mb-3">
+                                <div class="info-label text-primary fw-semibold mb-1">
+                                    <i class="bi bi-calendar2-event me-2"></i>
+                                    تاریخ و زمان مراجعه
+                                </div>
+                                <div class="info-value fw-bold">
+                                    <i class="bi bi-clock-history text-warning me-2"></i>
+                                    پنجشنبه ۱۴ خرداد ۱۴۰۲ - ساعت 10:00 تا 10:30
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <h6 class="text-muted mb-1">وضعیت</h6>
-                                <span class="status-badge status-pending">در انتظار</span>
+                            
+                            <!-- وضعیت نوبت -->
+                            <div class="info-item">
+                                <div class="info-label text-primary fw-semibold mb-1">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    وضعیت نوبت
+                                </div>
+                                <div>
+                                    <span class="status-badge status-pending animate-pulse">
+                                        <i class="bi bi-clock-history me-1"></i>
+                                        در انتظار تایید نهایی
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <h6 class="text-muted mb-2">توضیحات</h6>
-                        <p>دندان آسیاب شماره 3 نیاز به عصب‌کشی دارد. بیمار گزارش درد شدید هنگام جویدن دارد.</p>
+                    <!-- ستون سمت چپ -->
+                    <div class="col-md-6">
+                        <!-- نوع خدمت -->
+                        <div class="info-card bg-light-primary p-3 rounded-3 h-100">
+                            <div class="info-item mb-3">
+                                <div class="info-label text-primary fw-semibold mb-1">
+                                    <i class="bi bi-clipboard2-pulse me-2"></i>
+                                    نوع خدمت درخواستی
+                                </div>
+                                <div class="info-value fw-bold">
+                                    <span class="badge bg-primary bg-opacity-20 text-primary fs-6">
+                                        <i class="bi bi-tooth me-1"></i>
+                                        عصب‌کشی (اندودنتیکس)
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- مدت زمان -->
+                            <div class="info-item">
+                                <div class="info-label text-primary fw-semibold mb-1">
+                                    <i class="bi bi-stopwatch me-2"></i>
+                                    مدت زمان تخمینی
+                                </div>
+                                <div class="info-value fw-bold">
+                                    <i class="bi bi-hourglass-split text-info me-2"></i>
+                                    45 دقیقه
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
-                    <button type="button" class="btn btn-success">تایید نوبت</button>
-                    <button type="button" class="btn btn-danger">لغو نوبت</button>
+                
+                <!-- توضیحات و جزئیات -->
+                <div class="info-card bg-light-primary p-3 rounded-3 mb-4">
+                    <div class="info-item">
+                        <div class="info-label text-primary fw-semibold mb-2">
+                            <i class="bi bi-journal-text me-2"></i>
+                            توضیحات و جزئیات درمان
+                        </div>
+                        <div class="info-value bg-white p-3 rounded-2 border-start border-3 border-primary">
+                            <p class="mb-2 fw-medium">دندان آسیاب شماره 3 (مولر اول پایین راست)</p>
+                            <p class="mb-0 text-muted">
+                                بیمار گزارش درد شدید هنگام جویدن دارد. در معاینه اولیه پوسیدگی عمیق 
+                                مشاهده شده و نیاز به عصب‌کشی دارد. حساسیت به سرما و گرما گزارش شده است.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تاریخچه نوبت -->
+                <div class="info-card bg-light-primary p-3 rounded-3">
+                    <div class="info-item">
+                        <div class="info-label text-primary fw-semibold mb-2">
+                            <i class="bi bi-clock-history me-2"></i>
+                            سوابق و تاریخچه نوبت
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-badge bg-success">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                                <div class="timeline-content bg-white p-3 rounded-2 shadow-sm">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold">ثبت اولیه نوبت</span>
+                                        <small class="text-muted">۱۲ خرداد ۱۴۰۲ - 14:30</small>
+                                    </div>
+                                    <p class="mb-0 text-muted small">توسط منشی: خانم رضایی</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-badge bg-info">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </div>
+                                <div class="timeline-content bg-white p-3 rounded-2 shadow-sm">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold">تایید اولیه توسط دکتر</span>
+                                        <small class="text-muted">۱۲ خرداد ۱۴۰۲ - 16:45</small>
+                                    </div>
+                                    <p class="mb-0 text-muted small">دکتر حسینی - نیاز به عکس رادیوگرافی دارد</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-badge bg-warning">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                </div>
+                                <div class="timeline-content bg-white p-3 rounded-2 shadow-sm">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold">آپلود رادیوگرافی</span>
+                                        <small class="text-muted">۱۳ خرداد ۱۴۰۲ - 09:15</small>
+                                    </div>
+                                    <p class="mb-0 text-muted small">بیمار تصاویر را از طریق پنل ارسال کرد</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer bg-light rounded-bottom d-flex flex-column flex-md-row justify-content-between gap-3">
+  <!-- دکمه‌های عملکرد اصلی -->
+  <div class="d-flex flex-column flex-md-row gap-2">
+    <button type="button" class="btn btn-success rounded-pill px-4">
+      <i class="bi bi-check-circle me-2"></i> تایید نهایی
+    </button>
+    <button type="button" class="btn btn-outline-danger rounded-pill px-4">
+      <i class="bi bi-x-circle me-2"></i> لغو نوبت
+    </button>
+  </div>
+
+  <!-- دکمه‌های ثانویه -->
+  <div class="d-flex flex-column flex-md-row gap-2">
+    <button type="button" class="btn btn-primary rounded-pill px-4">
+      <i class="bi bi-printer me-2"></i> چاپ رسید
+    </button>
+    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">
+      <i class="bi bi-x-lg me-2"></i> بستن جزئیات
+    </button>
+  </div>
+</div>  
+
         </div>
     </div>
+</div>
 
-    </div>
-    </div>
-    </body>
-        
-    <script>
-        // اعمال فیلترها
-        document.getElementById('applyFilters').addEventListener('click', function() {
-            const status = document.getElementById('statusFilter').value;
-            const service = document.getElementById('serviceFilter').value;
-            const startDate = document.getElementById('startDateFilter').value;
-            const endDate = document.getElementById('endDateFilter').value;
-            const searchTerm = document.getElementById('searchInput').value;
-            
-            // اینجا می‌توانید منطق فیلتر کردن را پیاده‌سازی کنید
-            console.log('فیلترها اعمال شدند:', {status, service, startDate, endDate, searchTerm});
-            
-            // نمایش پیام موفقیت
-            alert('فیلترها با موفقیت اعمال شدند!');
+</div>
+</div>
+</body>
+
+
+<!-- اسکریپت‌ها -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // فعال کردن tooltip‌ها
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
         });
         
-        // جستجو
-        document.getElementById('searchButton').addEventListener('click', function() {
-            const searchTerm = document.getElementById('searchInput').value;
-            console.log('جستجو برای:', searchTerm);
-            // اینجا می‌توانید منطق جستجو را پیاده‌سازی کنید
+        // شبیه‌سازی کلیک بر روی دکمه مشاهده جزئیات
+        document.querySelectorAll('.btn-outline-primary').forEach(btn => {
+            if (btn.querySelector('.bi-eye')) {
+                btn.addEventListener('click', function() {
+                    var modal = new bootstrap.Modal(document.getElementById('viewAppointmentModal'));
+                    modal.show();
+                });
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
