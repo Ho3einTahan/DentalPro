@@ -770,108 +770,143 @@
 </div>
 
 <!-- مودال نوبت جدید -->
+<!-- مودال ثبت نوبت جدید - طراحی حرفه‌ای و کاربرپسند -->
 <div class="modal fade" id="newAppointmentModal" tabindex="-1" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content border-0 shadow-lg rounded-4">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0" style="box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); border-radius: 12px; overflow: hidden;">
       
-      <!-- هدر -->
-      <div class="modal-header bg-primary text-white rounded-top">
-        <h5 class="modal-title d-flex align-items-center gap-2">
-          <i class="bi bi-calendar-plus fs-4"></i> ثبت نوبت جدید
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- هدر با طراحی گرادیان و افکت شیشه‌ای -->
+      <div class="modal-header py-3" style="background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); backdrop-filter: blur(5px);">
+        <div class="d-flex align-items-center">
+          <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3 d-flex align-items-center justify-content-center">
+            <i class="bi bi-calendar2-plus text-white fs-4"></i>
+          </div>
+          <div>
+            <h5 class="modal-title text-white mb-0">ثبت نوبت جدید</h5>
+            <p class="text-white-50 mb-0 small">اطلاعات نوبت را وارد نمایید</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <!-- بدنه فرم -->
-      <div class="modal-body">
-        <form>
-          <div class="row g-4">
-
-            <!-- اطلاعات بیمار -->
-            <div class="col-md-6">
-              <div class="border rounded-3 p-3 h-100 shadow-sm bg-light-subtle">
-                <div class="d-flex align-items-center gap-3 mb-3">
-                  <img src="https://ui-avatars.com/api/?name=بیمار+جدید&size=80&background=2a7f8f&color=fff" class="rounded-circle border" width="64" height="64">
-                  <div>
-                    <div class="fw-bold fs-5">بیمار جدید</div>
-                    <small class="text-muted">لطفا بیمار را انتخاب کنید</small>
-                  </div>
+      <!-- بدنه فرم با طراحی مدرن -->
+      <div class="modal-body p-0">
+        <form class="needs-validation" novalidate>
+          <div class="row g-0">
+            
+            <!-- بخش اطلاعات بیمار -->
+            <div class="col-md-6 p-4 border-end">
+              <div class="d-flex align-items-center mb-4">
+                <div class="position-relative me-3">
+                  <img src="https://ui-avatars.com/api/?name=بیمار+جدید&size=120&background=4b6cb7&color=fff" 
+                       class="rounded-circle border border-3 border-white shadow" width="72" height="72">
+                  <span class="position-absolute bottom-0 end-0 bg-success rounded-circle p-1 border border-2 border-white"></span>
                 </div>
+                <div>
+                  <h6 class="fw-bold mb-1">بیمار جدید</h6>
+                  <span class="badge bg-primary bg-opacity-10 text-primary small">در حال ثبت</span>
+                </div>
+              </div>
 
-                <div class="mb-3">
-                  <label class="form-label">انتخاب بیمار</label>
-                  <select class="form-select">
-                    <option selected disabled>انتخاب بیمار...</option>
+              <div class="mb-4">
+                <label class="form-label fw-bold text-muted small mb-2">انتخاب بیمار</label>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text bg-light"><i class="bi bi-person text-muted"></i></span>
+                  <select class="form-select shadow-none" required>
+                    <option selected disabled value="">جستجو یا انتخاب بیمار...</option>
                     <option>علی محمدی - 09351234567</option>
                     <option>فاطمه احمدی - 09123456789</option>
                     <option>رضا حسینی - 09011223344</option>
                     <option>زهرا کریمی - 09121112233</option>
                   </select>
                 </div>
+                <div class="invalid-feedback">لطفاً بیمار را انتخاب نمایید</div>
+              </div>
 
-                <div class="mb-3">
-                  <label class="form-label">تلفن همراه</label>
-                  <input type="tel" class="form-control" placeholder="مثال: 09123456789">
+              <div class="mb-3">
+                <label class="form-label fw-bold text-muted small mb-2">شماره تماس</label>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text bg-light"><i class="bi bi-telephone text-muted"></i></span>
+                  <input type="tel" class="form-control" 
+                         placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" pattern="09[0-9]{9}" required>
                 </div>
+                <div class="invalid-feedback">شماره تماس معتبر وارد کنید</div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <button type="button" class="btn btn-sm btn-outline-primary rounded-pill">
+                  <i class="bi bi-plus-circle me-1"></i> بیمار جدید
+                </button>
+                <a href="#" class="text-decoration-none small text-primary">لیست کامل بیماران</a>
               </div>
             </div>
 
-            <!-- اطلاعات خدمت -->
-            <div class="col-md-6">
-              <div class="border rounded-3 p-3 h-100 shadow-sm bg-light-subtle">
-                <div class="mb-3">
-                  <label class="form-label">نوع خدمت</label>
-                  <select class="form-select">
-                    <option selected disabled>انتخاب خدمت...</option>
-                    <option>معاینه عمومی (30 دقیقه)</option>
-                    <option>عصب‌کشی (60 دقیقه)</option>
-                    <option>پر کردن دندان (45 دقیقه)</option>
-                    <option>جرمگیری (45 دقیقه)</option>
-                    <option>روکش دندان (60 دقیقه)</option>
+            <!-- بخش اطلاعات نوبت -->
+            <div class="col-md-6 p-4">
+              <div class="mb-4">
+                <label class="form-label fw-bold text-muted small mb-2">نوع خدمت</label>
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text bg-light"><i class="bi bi-clipboard2-pulse text-muted"></i></span>
+                  <select class="form-select shadow-none" id="serviceType" required>
+                    <option selected disabled value="">انتخاب نوع خدمت...</option>
+                    <option data-duration="30">معاینه عمومی (30 دقیقه)</option>
+                    <option data-duration="60">عصب‌کشی (60 دقیقه)</option>
+                    <option data-duration="45">پر کردن دندان (45 دقیقه)</option>
+                    <option data-duration="45">جرمگیری (45 دقیقه)</option>
+                    <option data-duration="60">روکش دندان (60 دقیقه)</option>
                   </select>
                 </div>
+                <div class="invalid-feedback">لطفاً نوع خدمت را انتخاب کنید</div>
+              </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">تاریخ نوبت</label>
-                    <input type="date" class="form-control">
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">زمان نوبت</label>
-                    <input type="time" class="form-control">
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold text-muted small mb-2">تاریخ نوبت</label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-calendar3 text-muted"></i></span>
+                    <input type="date" class="form-control" required>
                   </div>
                 </div>
-
-                <div>
-                  <div class="small text-muted">مدت زمان خدمت انتخابی بعد از انتخاب نمایش داده می‌شود.</div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold text-muted small mb-2">زمان نوبت</label>
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-light"><i class="bi bi-clock text-muted"></i></span>
+                    <input type="time" class="form-control" required>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- توضیحات -->
-            <div class="col-12">
-              <label class="form-label">توضیحات</label>
-              <textarea class="form-control" rows="3" placeholder="توضیحات مربوط به نوبت..."></textarea>
+              <div class="alert alert-light border mb-4 d-flex align-items-center" id="durationAlert" style="display: none;">
+                <i class="bi bi-info-circle-fill text-primary me-2"></i>
+                <div>
+                  <small class="fw-bold d-block text-muted">مدت زمان خدمت</small>
+                  <span id="durationText" class="text-dark">-- دقیقه</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold text-muted small mb-2">توضیحات (اختیاری)</label>
+                <textarea class="form-control shadow-none" rows="2" placeholder="هر توضیحاتی که لازم می‌دانید..."></textarea>
+              </div>
             </div>
           </div>
         </form>
       </div>
 
-      <!-- فوتر -->
-      <div class="modal-footer bg-light rounded-bottom d-flex flex-column flex-md-row justify-content-between gap-2 p-3">
-        <button type="button" class="btn btn-outline-secondary btn-lg w-100 w-md-auto" data-bs-dismiss="modal">
+      <!-- فوتر با دکمه‌های عمل -->
+      <div class="modal-footer bg-light p-4 border-top d-flex flex-column flex-md-row justify-content-between gap-3">
+        <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill flex-grow-1" data-bs-dismiss="modal">
           <i class="bi bi-x-lg me-2"></i> انصراف
         </button>
-        <button type="button" class="btn btn-primary btn-lg w-100 w-md-auto">
-          <i class="bi bi-check-lg me-2"></i> ثبت نوبت
+        <button type="submit" class="btn btn-lg btn-primary rounded-pill flex-grow-1 shadow-sm" 
+                style="background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); border: none;">
+          <i class="bi bi-check2-circle me-2"></i> ثبت نوبت
         </button>
       </div>
 
     </div>
   </div>
 </div>
-
-
 <!-- مودال مشاهده نوبت - نسخه بهینه شده -->
 <div class="modal fade" id="viewAppointmentModal" tabindex="-1" aria-labelledby="viewAppointmentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
